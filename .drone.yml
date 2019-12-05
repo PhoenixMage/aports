@@ -1,0 +1,23 @@
+kind: pipeline
+name: edge-armv7
+
+clone:
+  disable: true
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: build
+    image: alpinelinux/alpine-drone-ci:edge-armv7
+    commands:
+      - build.sh
+    environment:
+      GH_TOKEN:
+        from_secret: github_token
+    pull: always
+
+trigger:
+  event:
+    - pull_request
