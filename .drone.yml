@@ -15,12 +15,5 @@ steps:
   image: alpinelinux/alpine-drone-ci:edge-armv7
   commands:
   - build.sh
-  environment:
-    GH_TOKEN:
-      from_secret: github_token
-
-trigger:
-  event:
-  - pull_request
 
 ...
