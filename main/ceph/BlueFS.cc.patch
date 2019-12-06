@@ -9,13 +9,4 @@
    char *out)             ///< [out] optional: or copy it here
  {
    dout(10) << __func__ << " h " << h
-@@ -1328,7 +1328,7 @@
-   while (len > 0) {
-     uint64_t x_off = 0;
-     auto p = h->file->fnode.seek(off, &x_off);
--    uint64_t l = std::min(p->length - x_off, static_cast<uint64_t>(len));
-+    uint64_t l = std::min(p->length - x_off, len);
-     dout(20) << __func__ << " read buffered 0x"
-              << std::hex << x_off << "~" << l << std::dec
-              << " of " << *p << dendl;
 diff -Naur a/src/os/bluestore/BlueFS.h b/src/os/bluestore/BlueFS.h
