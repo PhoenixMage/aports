@@ -12,7 +12,7 @@ clone:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci
+  image: phoenixmage/alpine-drone-ci:v3.9-armv7
   commands:
   - build.sh
 
