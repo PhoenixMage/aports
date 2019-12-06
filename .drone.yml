@@ -12,7 +12,7 @@ clone:
 steps:
 - name: build
   pull: always
-  image: docker pull phoenixmage/alpine-drone-ci:latest
+  image: phoenixmage/alpine-drone-ci
   commands:
   - build.sh
 
