@@ -16,4 +16,7 @@ steps:
   commands:
   - build.sh
 
+trigger:
+  event:
+    - pull_request
 ...
