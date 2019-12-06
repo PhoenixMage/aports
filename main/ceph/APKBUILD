@@ -90,6 +90,7 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	musl-fixes.patch
 	boost-1.70.patch
 	buffer.h.patch
+	config_values.h.patch
 	"
 subpackages="
 	$pkgname-doc
