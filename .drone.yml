@@ -15,7 +15,8 @@ steps:
   image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
   - free
-  - build.sh
+  - cat /sys/fs/cgroup/memory/memory.limit_in_bytes
+    #  - build.sh
 
 trigger:
   event:
