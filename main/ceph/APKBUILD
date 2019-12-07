@@ -96,7 +96,6 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	BlueFS.h.patch
 	BlueFS.cc.patch
 	osd_types.h.patch
-	memcheck.sh
 	"
 subpackages="
 	$pkgname-doc
@@ -156,8 +155,8 @@ _py3_sitelib() {
 }
 
 build() {
-	cd $srcdir
-	sh memcheck.sh
+	awk -F: '/^[0-9]+:memory:/ { filepath="/sys/fs/cgroup/memory"$3"/memory.limit_in_bytes"; getline line < filepath; print line }' /proc/self/cgroup
+
 	gcc --version
 	sleep 10
 	export CEPH_BUILD_VIRTUALENV="$builddir"
@@ -538,5 +537,4 @@ e1becd813ed3f28e2e4a6bef78b3b5117c1c0bb9cabe0ba9c912e0a20b551b6b2667495cddb94acd
 bf5b6d2a94eaedcc6316702c5ddbc3e11ab2662f275a0750b314b216b1130c1fc0d00c12780cde3c6ff123711e300b9d3daac1e66a84512c199ac09816c667ea  config_values.h.patch
 044a4d98f086c407027c45e50d3aac0786362c48cd4679e5c6bb436efaf240f863c783e544af8cfb106ee6d2a6d4a2e535be581a27f5742a396973d88bf3fc8b  BlueFS.h.patch
 962659358f261c4dbaff1463220694b6f7ac61006b33be8e7950cf45115aec46c3a9acddafceb1773c39ef79664a8f9950303d66160cda96068eb0d51260afbb  BlueFS.cc.patch
-1bfcf766d546c963bd7b1a1a64ea236b4e0fcb534855d3d1c0056dc09a5945b66543e28d29e1a89ccc81fd534ab4a952ff09da46e770fd37008a2fbaf3344e89  osd_types.h.patch
-de02503fd6376bcb6955161862dc2029b5fab8c3f1dc13e6364f0eaf31daa9b1005e4ce39ac7a25046ac6afa93da7bde0eea65918d2276c566677b37c57b67b1  memcheck.sh"
+1bfcf766d546c963bd7b1a1a64ea236b4e0fcb534855d3d1c0056dc09a5945b66543e28d29e1a89ccc81fd534ab4a952ff09da46e770fd37008a2fbaf3344e89  osd_types.h.patch"
