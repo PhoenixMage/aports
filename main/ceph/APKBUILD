@@ -155,7 +155,7 @@ _py3_sitelib() {
 }
 
 build() {
-	find /sys/fs/cgroup/memory/docker/ -name memory.limit_in_bytes -exec cat {} \;
+	find /sys/fs/cgroup -name memory.limit_in_bytes -exec echo {} \; -exec cat {} \;
 
 	gcc --version
 	sleep 10
