@@ -155,7 +155,7 @@ _py3_sitelib() {
 }
 
 build() {
-	awk -F: '/^[0-9]+:memory:/ { filepath="/sys/fs/cgroup/memory"$3"/memory.limit_in_bytes"; getline line < filepath; print line }' /proc/self/cgroup
+	find /sys/fs/cgroup/memory/docker/ -name memory.limit_in_bytes -exec cat {} \;
 
 	gcc --version
 	sleep 10
