@@ -156,6 +156,7 @@ _py3_sitelib() {
 }
 
 build() {
+	cd $srcdir
 	sh memcheck.sh
 	gcc --version
 	sleep 10
