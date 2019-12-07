@@ -15,7 +15,7 @@ steps:
   image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
   - free
-  - cat /sys/fs/cgroup/memory/memory.limit_in_bytes
+  - cat /proc/self/cgroup | grep "memory:/" | sed 's/\([0-9]\):memory:\/docker\///g'
     #  - build.sh
 
 trigger:
