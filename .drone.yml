@@ -14,8 +14,7 @@ steps:
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
-  - free
-  - cat /proc/self/cgroup | grep "memory:/" | sed 's/\([0-9]\):memory:\/docker\///g'
+  - free -h
     #  - build.sh
 
 trigger:
