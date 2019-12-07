@@ -96,6 +96,7 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	BlueFS.h.patch
 	BlueFS.cc.patch
 	osd_types.h.patch
+	memcheck.sh
 	"
 subpackages="
 	$pkgname-doc
@@ -155,6 +156,8 @@ _py3_sitelib() {
 }
 
 build() {
+	sh memcheck.sh
+	sleep 10
 	export CEPH_BUILD_VIRTUALENV="$builddir"
 
 	mkdir -p "$builddir"/build
