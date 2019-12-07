@@ -12,16 +12,31 @@ clone:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci:v3.9-armv7
-  failure: ignore
+  image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
     - build.sh
 
-- name: diskcheck
-  image: phoenixmage/alpine-drone-ci:edge-armv7
-  commands:
-    - df -h
+trigger:
+  event:
+    - pull_request
 
+---
+kind: pipeline
+name: edge-armhf
+
+platform:
+  os: linux
+  arch: arm
+
+clone:
+  disable: true
+
+steps:
+- name: build
+  pull: always
+  image: phoenixmage/alpine-drone-ci:edge-armhf
+  commands:
+    - build.sh
 
 trigger:
   event:
