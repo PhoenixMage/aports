@@ -14,8 +14,7 @@ steps:
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
-  - free -g
-    #  - build.sh
+    - build.sh
 
 trigger:
   event:
