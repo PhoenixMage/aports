@@ -13,9 +13,15 @@ steps:
 - name: build
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
+  failure: ignore
   commands:
     - build.sh
+
+- name: diskcheck
+  image: phoenixmage/alpine-drone-ci:edge-armv7
+  commands:
     - df -h
+
 
 trigger:
   event:
