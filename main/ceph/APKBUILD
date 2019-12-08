@@ -184,7 +184,7 @@ build() {
 		-DWITH_BABELTRACE=OFF \
 		-DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
 		-DWITH_TESTS=OFF
-	make -j 24
+	make -j 16
 
 }
 
