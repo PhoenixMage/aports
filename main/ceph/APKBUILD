@@ -160,7 +160,7 @@ build() {
 	cd "$builddir"/build
 
 	cmake .. \
-		-DCMAKE_SYSTEM_PROCESSOR=armv7-a \
+		-DCMAKE_SYSTEM_PROCESSOR=arm \
 		-DALLOCATOR=libc \
 		-DCMAKE_INSTALL_PREFIX=$_prefix \
 		-DCMAKE_INSTALL_LIBDIR=$_libdir \
