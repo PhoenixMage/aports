@@ -163,6 +163,7 @@ build() {
 	cd "$builddir"/build
 
 	cmake .. \
+		-DCMAKE_C_FLAGS="-mfpu=neon" \
 		-DCMAKE_SYSTEM_PROCESSOR=arm \
 		-DALLOCATOR=libc \
 		-DCMAKE_INSTALL_PREFIX=$_prefix \
