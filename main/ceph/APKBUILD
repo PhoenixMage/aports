@@ -96,7 +96,6 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	BlueFS.cc.patch
 	osd_types.h.patch
 
-	dmclock_util.h.patch
 	rbd-nbd.cc.patch
 	Striper.cc.patch
 	"
