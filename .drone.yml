@@ -19,4 +19,25 @@ steps:
 trigger:
   event:
     - pull_request
+---
+kind: pipeline
+name: edge-armhf
+
+platform:
+  os: linux
+  arch: arm
+
+clone:
+  disable: true
+
+steps:
+- name: build
+  pull: always
+  image: phoenixmage/alpine-drone-ci:edge-armhf
+  commands:
+  - build.sh
+
+trigger:
+  event:
+    - pull_request
 ...
