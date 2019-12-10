@@ -279,7 +279,6 @@ common() {
 	_pkg $_bindir ceph \
 		ceph-authtool \
 		ceph-conf \
-		ceph-dencoder \
 		ceph-rbdnamer \
 		ceph-syn \
 		cephfs-data-scan \
