@@ -1,7 +1,7 @@
 # Contributor: Anthony Davies <anthony.t.davies@gmail.com>
 # Maintainer:
 pkgname="libstoragemgmt"
-pkgver="1.8.1"
+pkgver="1.8.2"
 pkgrel=1
 pkgdesc="Storage array management library"
 url="https://github.com/libstorage/libstoragemgmt"
@@ -29,11 +29,7 @@ checkdepends="
         libtool
 "
 install=""
-source="https://github.com/libstorage/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.gz
-        alpine-macro.patch::https://patch-diff.githubusercontent.com/raw/libstorage/libstoragemgmt/pull/406.patch
-        strerr_r_to_strerr_l.patch::https://patch-diff.githubusercontent.com/raw/libstorage/libstoragemgmt/pull/408.patch
-        fcntlh_fix.patch::https://patch-diff.githubusercontent.com/raw/libstorage/libstoragemgmt/pull/407.patch
-        "
+source="https://github.com/libstorage/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.gz"
 
 build() {
         pip3 install --user pywbem
@@ -59,7 +55,4 @@ package() {
         make DESTDIR="$pkgdir" install
 }
 
-sha512sums="88e49a1e65dd0d8388a341365a0bcdfa30c39e1e141eca1c5941f7cdf63783f6c500d73fb4f00d23c0108212a0eab3cb11c9039425b4b57b6a268b09b5c9f888  libstoragemgmt-1.8.1.tar.gz
-498015e5240d02a3baf35123ac588452e968dbfc986c58ab701b9881482d4bce59cd0ffc0f5564d03b334eb91ebc47ebd6c9ba23f620c6f3832eeb0dc5720d51  alpine-macro.patch
-082f1161972ede2c438040ce2dd289700d92bdca1a283bd8cf0eeadc41a0e1452e1bf87166833c2b77aa5cf42839b665cbd91c65ff5e924523bed53d4938a1ba  strerr_r_to_strerr_l.patch
-cb2579786ea11b99d5e8d5c1d46fb4469bd285edf003f2fc92bb8baff37319cd4899ac9228d5f2434d0d3fa8713c54bb6d3c637911388100201ac5eed1efacf1  fcntlh_fix.patch"
+sha512sums="d6b8d0103f89783ad8cc7f78b642669cb896abe95cff27e8ae5b91872d5edb81a2e8886412ad32f0b716d17f50c8c1d286786949d5b136d71f320ad66cb0e6af  libstoragemgmt-1.8.2.tar.gz"
