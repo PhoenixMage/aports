@@ -46,14 +46,15 @@ build() {
 package() {
 	local binaries="kube-apiserver
 			kube-controller-manager
-			cloud-controller-manager
 			kube-scheduler
 			kubeadm
 			kubectl
 			kubelet
 			kube-proxy"
 	if [ $CARCH == "x86_64" ]; then
-		binaries="$binaries hyperkube"
+		binaries="$binaries
+			hyperkube
+			cloud-controller-manager"
 	fi
 
 	for bin in $binaries; do
