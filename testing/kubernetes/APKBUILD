@@ -3,8 +3,8 @@
 # Contributor: Tiago Ilieve <tiago.myhro@gmail.com>
 # Maintainer: Francesco Colista <fcolista@alpinelinux.org>
 pkgname=kubernetes
-pkgver=1.15.3
-pkgrel=2
+pkgver=1.17.0
+pkgrel=r0
 pkgdesc="Container Cluster Manager for Docker"
 url="https://kubernetes.io/"
 #arch="x86_64 armhf"
