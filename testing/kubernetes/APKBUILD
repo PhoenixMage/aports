@@ -44,8 +44,7 @@ build() {
 }
 
 package() {
-	local binaries="hyperkube
-			kube-apiserver
+	local binaries="kube-apiserver
 			kube-controller-manager
 			cloud-controller-manager
 			kube-scheduler
@@ -53,6 +52,9 @@ package() {
 			kubectl
 			kubelet
 			kube-proxy"
+	if [ $CARCH == "x86_64" ]; then
+		binaries="$binaries hyperkube"
+	fi
 
 	for bin in $binaries; do
 		mkdir -p "$pkgdir"/var/log/$bin
