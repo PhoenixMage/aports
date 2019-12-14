@@ -165,11 +165,11 @@ build() {
 	cd "$builddir"/build
 
 	if [ $CARCH == "armv7" ]; then
-		ARCH_BUILDFLAGS="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" \
-				-DCMAKE_SYSTEM_PROCESSOR=arm \
-				-DHAVE_ARMV8_CRC=OFF \
-				-DHAVE_ARMV8_SIMD=OFF \
-				-DHAVE_ARMV8_CRYPTO=OFF \
+		ARCH_BUILDFLAGS="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" 
+				-DCMAKE_SYSTEM_PROCESSOR=arm 
+				-DHAVE_ARMV8_CRC=OFF 
+				-DHAVE_ARMV8_SIMD=OFF 
+				-DHAVE_ARMV8_CRYPTO=OFF 
 				-DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF" 
 	fi
 
