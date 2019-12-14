@@ -63,8 +63,8 @@ package() {
 		echo $CARCH
 		find _output -name $bin
 		case "$CARCH" in
-			arm) install -Dm755 _output/local/bin/linux/arm/$bin "$pkgdir"/usr/bin/$bin ;;
 			arm64) install -Dm755 _output/local/bin/linux/arm64/$bin "$pkgdir"/usr/bin/$bin ;;
+			arm*) install -Dm755 _output/local/bin/linux/arm/$bin "$pkgdir"/usr/bin/$bin ;;
 			x86_64) install -Dm755 _output/local/bin/linux/amd64/$bin "$pkgdir"/usr/bin/$bin ;;
 		esac
 	done
