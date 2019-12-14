@@ -15,6 +15,11 @@ steps:
   image: phoenixmage/alpine-drone-ci:edge-armv7
   commands:
   - build.sh
+  environment:
+    PKG_SIGN_KEY:
+      from_secret: PKG_SIGN_KEY
+    PKG_SIGN_PUB:
+      from_secret: PKG_SIGN_PUB
 
 trigger:
   event:
