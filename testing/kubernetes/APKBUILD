@@ -87,6 +87,7 @@ _kubeadm() {
 	pkgdesc="Kubernetes - kubeadm"
 	depends="iproute2 socat ethtool"
 	mkdir -p "$subpkgdir"/usr/bin
+	find $pkgdir -name kubeadm
 	mv "$pkgdir"/usr/bin/kubeadm "$subpkgdir"/usr/bin
 }
 
