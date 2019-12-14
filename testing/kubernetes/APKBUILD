@@ -51,11 +51,12 @@ package() {
 			kubectl
 			kubelet
 			kube-proxy"
-	if [ $CARCH == "x86_64" ]; then
-		binaries="$binaries
-			hyperkube
-			cloud-controller-manager"
-	fi
+
+#	if [ $CARCH == "x86_64" ]; then
+#		binaries="$binaries
+#			hyperkube
+#			cloud-controller-manager"
+#	fi
 
 	for bin in $binaries; do
 		mkdir -p "$pkgdir"/var/log/$bin
