@@ -19,4 +19,25 @@ steps:
 trigger:
   event:
     - pull_request
+---
+kind: pipeline
+name: edge-aarch64
+
+platform:
+  os: linux
+  arch: arm
+
+clone:
+  disable: true
+
+steps:
+- name: build
+  pull: always
+  image: phoenixmage/alpine-drone-ci:edge-aarch64
+  commands:
+  - build.sh
+
+trigger:
+  event:
+    - pull_request
 ...
