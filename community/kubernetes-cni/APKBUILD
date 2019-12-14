@@ -1,0 +1,25 @@
+# Contributor: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=kubernetes-cni
+pkgver=0.8.3
+pkgrel=0
+pkgdesc="Container Networking Interface Plugins"
+url="https://github.com/containernetworking/plugins/"
+arch="x86_64 armhf armv7 aarch64"
+license="Apache-2.0"
+options="!checki"
+depends="kubernetes-cni"
+makedepends="bash coreutils findutils go linux-headers rsync grep musl-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/containernetworking/plugins/archive/v$pkgver.tar.gz"
+builddir="$srcdir/plugins-$pkgver"
+
+build() {
+        cd "$builddir"
+        ./build_linux.sh
+}
+
+package() {
+        cd "$builddir"
+        install -dm755 "$pkgdir"/opt/cni/bin
+        install -m755 bin/* "$pkgdir"/opt/cni/bin/
+}
+sha512sums="de685a66e0e875e8a2209b76c5d1f5fd0e426804e3db6084cf2e89695a8b1876eae47ff1fcfdf065a3b027918fe7c4775d2321358402dbd1206928538edb52b4  kubernetes-cni-0.8.3.tar.gz"
