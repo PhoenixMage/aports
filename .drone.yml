@@ -25,7 +25,7 @@ name: edge-aarch64
 
 platform:
   os: linux
-  arch: arm
+  arch: arm64
 
 clone:
   disable: true
