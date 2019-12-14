@@ -21,7 +21,7 @@ steps:
     PKG_SIGN_PUB:
       from_secret: PKG_SIGN_PUB
     TEST_TEST_VAR:
-      from_secret: test_var
+      from_secret: testvar
 
 trigger:
   event:
@@ -49,7 +49,7 @@ steps:
     PKG_SIGN_PUB:
       from_secret: PKG_SIGN_PUB
     TEST_TEST_VAR:
-      from_secret: test_var
+      from_secret: testvar
 
 trigger:
   event:
