@@ -1,5 +1,4 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
-#
 pkgname=kubernetes-cni
 pkgver=0.8.3
 pkgrel=0
