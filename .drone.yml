@@ -19,6 +19,17 @@ steps:
   commands:
   - build.sh
 
+- name: upload
+  image: appleboy/drone-scp
+  settings:
+    host: phoenixphire.no-ip.org
+    target: packages
+    source: packages/*
+    username:
+      from-secret: ssh-username
+    password:
+      from-secret: ssh-password
+
 trigger:
   event:
     - pull_request
