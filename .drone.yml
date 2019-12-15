@@ -19,6 +19,8 @@ steps:
   commands:
   - build.sh
 
+- name: upload
+  image: plugins/s3
   settings:
     region: ap-southeast-2
     bucket: apks-phoenixphire
