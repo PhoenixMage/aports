@@ -13,6 +13,9 @@ steps:
 - name: build
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
+  environment:
+    PKG_SIGN_KEY:
+      from_secret: pkg_sign_key
   commands:
   - build.sh
 
@@ -34,6 +37,9 @@ steps:
 - name: build
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-aarch64
+  environment:
+    PKG_SIGN_KEY:
+      from_secret: pkg_sign_key
   commands:
   - build.sh
 
