@@ -43,6 +43,14 @@ steps:
   commands:
   - build.sh
 
+- name: upload
+  image: plugins/gcs
+  source: /home/buildozer/packages/*
+  ignore: APKINDEX.tar.gz
+  target: apks-phoenixphire/packages
+  token:
+    from_secret: google-token
+
 trigger:
   event:
     - pull_request
