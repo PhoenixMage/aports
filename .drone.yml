@@ -13,6 +13,9 @@ steps:
 - name: build
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
+  environment:
+    TEST_VAR:
+      from_secret: testvar
   commands:
   - build.sh
 
