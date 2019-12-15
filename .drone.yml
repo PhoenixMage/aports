@@ -43,6 +43,18 @@ steps:
   commands:
   - build.sh
 
+- name: upload
+  image: plugins/s3
+  settings:
+    bucket: apks-phoenixphire
+    acl: private
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    source: /home/buildozer/packages/*
+    target: /packages
+
 trigger:
   event:
     - pull_request
