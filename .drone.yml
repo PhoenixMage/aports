@@ -28,7 +28,7 @@ steps:
     host: phoenixphire.no-ip.org
     target: packages
     source: packages/*
-    username:
+    user:
       from-secret: ssh-username
     password:
       from-secret: ssh-password
