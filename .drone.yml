@@ -14,8 +14,10 @@ steps:
   pull: always
   image: phoenixmage/alpine-drone-ci:edge-armv7
   environment:
-    TEST_VAR:
-      from_secret: testvar
+    PKG_SIGN_KEY:
+      from_secret: pkg_sign_key
+    PKG_SIGN_PUB:
+      from_secret: pkg_sign_pub
   commands:
   - build.sh
 
