@@ -29,9 +29,9 @@ steps:
     target: packages
     source: packages/*
     user:
-      from-secret: ssh-username
+      from_secret: ssh-username
     password:
-      from-secret: ssh-password
+      from_secret: ssh-password
 
 trigger:
   event:
