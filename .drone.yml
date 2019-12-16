@@ -47,6 +47,9 @@ platform:
 clone:
   disable: true
 
+workspace:
+  base: /home/buildozer
+
 steps:
 - name: build
   pull: always
