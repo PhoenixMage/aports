@@ -35,7 +35,7 @@ steps:
 
 trigger:
   event:
-    - push
+    - pull_request
 ---
 kind: pipeline
 name: edge-aarch64
@@ -70,5 +70,5 @@ steps:
 
 trigger:
   event:
-    - push
+    - pull_request
 ...
