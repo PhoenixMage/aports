@@ -101,6 +101,7 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 
 	rbd-nbd.cc.patch
 	Striper.cc.patch
+	BlueStore.cc.patch
 	"
 	#boost-1.70.patch
 subpackages="
@@ -547,4 +548,5 @@ bf5b6d2a94eaedcc6316702c5ddbc3e11ab2662f275a0750b314b216b1130c1fc0d00c12780cde3c
 e1a2f47b2abfd242867376dab6b773d433a0785a0a1fdfc1aa1dbf4fd6ff4fe6eff605ff787c88e01a2b2d0c28510aed3d650b29d5cb188ac4e64ff17928d2e2  rbd-nbd.cc.patch
 5c599c3133397de17463d9329b9eb69a3579ddbd7d97a858c072fe8afcb620b1ee45d20a8f36781ec4242dc958236137dfb8db19f3686ea1c74ae1f729381c4a  Striper.cc.patch
 8a36b2aaddba6fa07c3583ebaabc38adbf5f6f744c62012561b988a12401d1235104b289d2fd6c7ffd6c03c3991071543ffc5adcc73ec1793dd42fd394cce98f  ceph-dencoder-dont-compile.patch
+f97ea5f1d9b1234bc4df3722683a14d790ec17829a5710c347dea2bc1c547f81249405f1c12167c28c7b672e8c5c66f402ee9874d8577bf566d9898248a8709e  BlueStore.cc.patch
 "
