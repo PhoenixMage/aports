@@ -80,7 +80,7 @@ makedepends="
 	xfsprogs-dev
 	xmlstarlet
 	yasm
-	libcap-ng
+	libcap-ng-dev
 	$_base_deps
 	$_osd_daemon_deps
 	$_osd_tools_deps
