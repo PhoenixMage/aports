@@ -1,31 +1,7 @@
-From 064f142746ae97f54865069cdacf5aae2b1b14f6 Mon Sep 17 00:00:00 2001
-From: Casey Bodley <cbodley@redhat.com>
-Date: Tue, 23 Apr 2019 15:40:01 -0400
-Subject: [PATCH] rgw: beast handle_connection() takes io_context
-
-as of boost 1.70, the socket no longer has a get_io_context(), so we
-have to pass it in as an argument
-
-Signed-off-by: Casey Bodley <cbodley@redhat.com>
----
- src/rgw/rgw_asio_frontend.cc | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/src/rgw/rgw_asio_frontend.cc b/src/rgw/rgw_asio_frontend.cc
-index e4be074ec74f..4af3695dc1ce 100644
---- a/src/rgw/rgw_asio_frontend.cc
-+++ b/src/rgw/rgw_asio_frontend.cc
-@@ -81,7 +81,8 @@ class StreamIO : public rgw::asio::ClientIO {
- using SharedMutex = ceph::async::SharedMutex<boost::asio::io_context::executor_type>;
- 
- template <typename Stream>
--void handle_connection(RGWProcessEnv& env, Stream& stream,
-+void handle_connection(boost::asio::io_context& context,
-+                       RGWProcessEnv& env, Stream& stream,
-                        boost::beast::flat_buffer& buffer, bool is_ssl,
-                        SharedMutex& pause_mutex,
-                        rgw::dmclock::Scheduler *scheduler,
-@@ -152,7 +153,7 @@ void handle_connection(RGWProcessEnv& env, Stream& stream,
+diff -aur a/src/rgw/rgw_asio_frontend.cc b/src/rgw/rgw_asio_frontend.cc
+--- a/src/rgw/rgw_asio_frontend.cc	2019-12-07 03:42:34.000000000 +1100
++++ b/src/rgw/rgw_asio_frontend.cc	2020-01-08 21:50:11.750738626 +1100
+@@ -160,7 +160,7 @@
                                    rgw::io::add_conlen_controlling(
                                      &real_client))));
        RGWRestfulIO client(cct, &real_client_io);
@@ -34,43 +10,11 @@ index e4be074ec74f..4af3695dc1ce 100644
        process_request(env.store, env.rest, &req, env.uri_prefix,
                        *env.auth_registry, &client, env.olog, y, scheduler);
      }
-@@ -560,7 +561,7 @@ void AsioFrontend::accept(Listener& l, boost::system::error_code ec)
-           return;
-         }
-         buffer.consume(bytes);
--        handle_connection(env, stream, buffer, true, pause_mutex,
-+        handle_connection(context, env, stream, buffer, true, pause_mutex,
-                           scheduler.get(), ec, yield);
-         if (!ec) {
-           // ssl shutdown (ignoring errors)
-@@ -578,7 +579,7 @@ void AsioFrontend::accept(Listener& l, boost::system::error_code ec)
-         auto c = connections.add(conn);
-         boost::beast::flat_buffer buffer;
-         boost::system::error_code ec;
--        handle_connection(env, s, buffer, false, pause_mutex,
-+        handle_connection(context, env, s, buffer, false, pause_mutex,
-                           scheduler.get(), ec, yield);
-         s.shutdown(tcp::socket::shutdown_both, ec);
-       });
-From f1651b8c509d60787d10c4115e29fecfd2da237c Mon Sep 17 00:00:00 2001
-From: Casey Bodley <cbodley@redhat.com>
-Date: Tue, 23 Apr 2019 15:41:45 -0400
-Subject: [PATCH] rgw: add executor type for basic_waitable_timers
-
-as of boost 1.70, the timer no longer depends on io_context directly,
-so we have to specify its executor as a template parameter
-
-Signed-off-by: Casey Bodley <cbodley@redhat.com>
----
- src/rgw/rgw_dmclock_async_scheduler.h | 5 +++++
- src/rgw/rgw_reshard.h                 | 9 ++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/src/rgw/rgw_dmclock_async_scheduler.h b/src/rgw/rgw_dmclock_async_scheduler.h
-index 70487a525373..1d454acd2ea6 100644
---- a/src/rgw/rgw_dmclock_async_scheduler.h
-+++ b/src/rgw/rgw_dmclock_async_scheduler.h
-@@ -82,7 +82,12 @@ class AsyncScheduler : public md_config_obs_t, public Scheduler {
+Only in b/src/rgw: rgw_asio_frontend.cc.orig
+diff -aur a/src/rgw/rgw_dmclock_async_scheduler.h b/src/rgw/rgw_dmclock_async_scheduler.h
+--- a/src/rgw/rgw_dmclock_async_scheduler.h	2019-12-07 03:42:34.000000000 +1100
++++ b/src/rgw/rgw_dmclock_async_scheduler.h	2020-01-08 21:50:11.750738626 +1100
+@@ -82,7 +82,12 @@
    using Completion = async::Completion<Signature, async::AsBase<Request>>;
  
    using Clock = ceph::coarse_real_clock;
@@ -83,11 +27,10 @@ index 70487a525373..1d454acd2ea6 100644
    Timer timer; //< timer for the next scheduled request
  
    CephContext *const cct;
-diff --git a/src/rgw/rgw_reshard.h b/src/rgw/rgw_reshard.h
-index d99a6ff68d5f..213fc238d2ee 100644
---- a/src/rgw/rgw_reshard.h
-+++ b/src/rgw/rgw_reshard.h
-@@ -183,7 +183,14 @@ class RGWReshardWait {
+diff -aur a/src/rgw/rgw_reshard.h b/src/rgw/rgw_reshard.h
+--- a/src/rgw/rgw_reshard.h	2019-12-07 03:42:34.000000000 +1100
++++ b/src/rgw/rgw_reshard.h	2020-01-08 21:50:11.750738626 +1100
+@@ -183,7 +183,14 @@
    ceph::condition_variable cond;
  
    struct Waiter : boost::intrusive::list_base_hook<> {
