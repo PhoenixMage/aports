@@ -81,7 +81,7 @@ makedepends="
 	xmlstarlet
 	yasm
 	libcap-ng-dev
-	libnl-dev
+	libnl3-dev
 	$_base_deps
 	$_osd_daemon_deps
 	$_osd_tools_deps
