@@ -98,7 +98,7 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	BlueFS.cc.patch
 	osd_types.h.patch
 	ceph-dencoder-dont-compile.patch
-	boost-1.70.patch
+	boost-1.72.patch
 
 	rbd-nbd.cc.patch
 	Striper.cc.patch
@@ -549,5 +549,5 @@ e1a2f47b2abfd242867376dab6b773d433a0785a0a1fdfc1aa1dbf4fd6ff4fe6eff605ff787c88e0
 5c599c3133397de17463d9329b9eb69a3579ddbd7d97a858c072fe8afcb620b1ee45d20a8f36781ec4242dc958236137dfb8db19f3686ea1c74ae1f729381c4a  Striper.cc.patch
 8a36b2aaddba6fa07c3583ebaabc38adbf5f6f744c62012561b988a12401d1235104b289d2fd6c7ffd6c03c3991071543ffc5adcc73ec1793dd42fd394cce98f  ceph-dencoder-dont-compile.patch
 f97ea5f1d9b1234bc4df3722683a14d790ec17829a5710c347dea2bc1c547f81249405f1c12167c28c7b672e8c5c66f402ee9874d8577bf566d9898248a8709e  BlueStore.cc.patch
-ea6b31aac39e40af2ac23f622a674ffc9040d75a4d04d20b32149fd1fde9494fc9349c319b2265bd8d0a978c2752a219866d2f63a4f37942862f319397ceacb5  boost-1.70.patch
+4f62fc054789bdbbc0e10a5f6a9cd188eba51b5cfa64c401fc9daca3c013603b1c795420959fb921c19d5c8a7869f9f008807796cb5692182eda6223e582711b  boost-1.72.patch
 "
