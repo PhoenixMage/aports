@@ -205,7 +205,7 @@ build() {
 		-DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
 		-DWITH_TESTS=OFF \
 		$cmakeoptions
-	make 
+	make -j 1 V=1
 
 }
 
