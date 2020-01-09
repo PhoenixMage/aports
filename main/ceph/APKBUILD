@@ -169,7 +169,7 @@ build() {
 
 	local cmakeoptions=
 	case "$CARCH" in
-		armv7) cmakeoptions="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" \
+		armv7) cmakeoptions="-DCMAKE_C_FLAGS='-march=armv7-a+neon-vfpv4 -latomic' \
 		  -DCMAKE_SYSTEM_PROCESSOR=arm \
 		  -DHAVE_ARMV8_CRC=OFF \
 		  -DHAVE_ARMV8_SIMD=OFF \
