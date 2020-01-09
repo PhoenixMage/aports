@@ -1,0 +1,19 @@
+diff -aur a/src/os/bluestore/BlueStore.cc b/src/os/bluestore/BlueStore.cc
+--- a/src/os/bluestore/BlueStore.cc	2019-12-07 03:42:34.000000000 +1100
++++ b/src/os/bluestore/BlueStore.cc	2020-01-09 10:25:41.889662809 +1100
+@@ -5524,11 +5524,11 @@
+ }
+ 
+ size_t BlueStore::available_freespace(uint64_t alloc_size) {
+-  size_t total = 0;
+-  auto iterated_allocation = [&](size_t off, size_t len) {
++  uint64_t total = 0;
++  auto iterated_allocation = [&](uint64_t off, uint64_t len) {
+     //only count in size that is alloc_size aligned
+-    size_t dist_to_alignment;
+-    size_t offset_in_block = off & (alloc_size - 1);
++    uint64_t dist_to_alignment;
++    uint64_t offset_in_block = off & (alloc_size - 1);
+     if (offset_in_block == 0)
+       dist_to_alignment = 0;
+     else
