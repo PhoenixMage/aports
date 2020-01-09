@@ -180,7 +180,7 @@ build() {
 		
 
 	cmake .. \
-		${ARCH_BUILDFLAGS} \
+		"${ARCH_BUILDFLAGS}" \
 		-DALLOCATOR=libc \
 		-DCMAKE_INSTALL_PREFIX=$_prefix \
 		-DCMAKE_INSTALL_LIBDIR=$_libdir \
