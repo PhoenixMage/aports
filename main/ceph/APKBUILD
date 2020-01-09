@@ -167,20 +167,20 @@ build() {
 	mkdir -p "$builddir"/build
 	cd "$builddir"/build
 
-	if [ $CARCH == "armv7" ]; then
-		ARCH_BUILDFLAGS="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" \
+	local cmakeoptions=
+	case "$CARCH" in
+		armv7) cmakeoptions="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" \
 		  -DCMAKE_SYSTEM_PROCESSOR=arm \
 		  -DHAVE_ARMV8_CRC=OFF \
 		  -DHAVE_ARMV8_SIMD=OFF \
 		  -DHAVE_ARMV8_CRYPTO=OFF \
-		  -DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF"
-	fi
+		  -DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF" ;;
+	esac
 
 	echo ${ARCH_BUILDFLAGS}
 		
 
 	cmake .. \
-		"${ARCH_BUILDFLAGS}" \
 		-DALLOCATOR=libc \
 		-DCMAKE_INSTALL_PREFIX=$_prefix \
 		-DCMAKE_INSTALL_LIBDIR=$_libdir \
@@ -203,7 +203,8 @@ build() {
 		-DWITH_SPDK=OFF \
 		-DWITH_BABELTRACE=OFF \
 		-DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
-		-DWITH_TESTS=OFF
+		-DWITH_TESTS=OFF \
+		$cmakeoptions
 	make 
 
 }
