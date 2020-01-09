@@ -162,6 +162,7 @@ _py3_sitelib() {
 }
 
 build() {
+	echo "Starting Build"
 	export CEPH_BUILD_VIRTUALENV="$builddir"
 
 	mkdir -p "$builddir"/build
