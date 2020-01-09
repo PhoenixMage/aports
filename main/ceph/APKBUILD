@@ -167,13 +167,18 @@ build() {
 	mkdir -p "$builddir"/build
 	cd "$builddir"/build
 
-	cmake .. \
-		  -DCMAKE_C_FLAGS="-march=armv7-a+neon-vfpv4 -latomic" \
+	if [ $CARCH == "armv7" ]; then
+		ARCH_BUILDFLAGS="-DCMAKE_C_FLAGS=\"-march=armv7-a+neon-vfpv4 -latomic\" \
 		  -DCMAKE_SYSTEM_PROCESSOR=arm \
 		  -DHAVE_ARMV8_CRC=OFF \
 		  -DHAVE_ARMV8_SIMD=OFF \
 		  -DHAVE_ARMV8_CRYPTO=OFF \
-		  -DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF \
+		  -DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF"
+	fi
+		
+
+	cmake .. \
+		${ARCH_BUILDFLAGS} \
 		-DALLOCATOR=libc \
 		-DCMAKE_INSTALL_PREFIX=$_prefix \
 		-DCMAKE_INSTALL_LIBDIR=$_libdir \
