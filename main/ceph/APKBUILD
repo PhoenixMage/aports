@@ -167,6 +167,7 @@ build() {
 	mkdir -p "$builddir"/build
 	cd "$builddir"/build
 
+	echo "Building for CARCH $CARCH"
 	case "$CARCH" in
 		armv7)
 		  cmake .. \
@@ -226,7 +227,7 @@ build() {
 			-DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
 			-DWITH_TESTS=OFF
 		  ;;
-		esac
+	esac
 
 	make
 
