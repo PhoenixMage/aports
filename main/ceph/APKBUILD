@@ -162,7 +162,6 @@ _py3_sitelib() {
 }
 
 build() {
-	echo "Starting Build"
 	export CEPH_BUILD_VIRTUALENV="$builddir"
 
 	mkdir -p "$builddir"/build
@@ -200,7 +199,7 @@ build() {
 			-DHAVE_ARMV8_CRC=OFF \
 			-DHAVE_ARMV8_SIMD=OFF \
 			-DHAVE_ARMV8_CRYPTO=OFF \
-			-DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF"
+			-DHAVE_ARMV8_CRC_CRYPTO_INTRINSICS=OFF
 		  ;;
 		*)
 		  cmake .. \
