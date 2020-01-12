@@ -31,10 +31,12 @@ build() {
 	#make SHA256CMD=/usr/bin/sha256sum GO_STATIC_PACKAGES=github.com/rook/rook/cmd/rook go.build VERBOSE=1
 	go build -v -o _output/bin/rook github.com/rook/rook/cmd/rook
 	cd images/ceph
+	echo Generating Templates
 	make SHA256CMD=/usr/bin/sha256sum generate-csv-ceph-templates
 }
 
 package() {
+	echo Packaging rook
 	cd $builddir
 	mkdir -p $pkgdir/usr/bin
 	cp _output/bin/rook $pkgdir/usr/bin/
@@ -42,6 +44,7 @@ package() {
 }
 
 ceph() {
+	echo Packaging rook-ceph
 	depends="rook"
 	cd $builddir
 	mkdir -p $subpkgdir/etc/ $subpkgdir/usr/local/bin
