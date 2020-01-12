@@ -27,7 +27,7 @@ build() {
 	#mkdir -p "$srcdir/github.com/rook"
 	#cp -r $builddir "$srcdir/github.com/rook/rook/"
 	#builddir="$srcdir/github.com/rook/rook"
-	make SHA256CMD=/usr/bin/sha256sum go.init
+	make SHA256CMD=/usr/bin/sha256sum GO_STATIC_PACKAGES=github.com/rook/rook/cmd/rook go.init
 	#make SHA256CMD=/usr/bin/sha256sum GO_STATIC_PACKAGES=github.com/rook/rook/cmd/rook go.build VERBOSE=1
 	go build -v -o _output/bin/rook github.com/rook/rook/cmd/rook
 	cd images/ceph
