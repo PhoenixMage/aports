@@ -8,7 +8,8 @@ arch="x86_64 aarch64 armv7"
 license="Apache-2.0"
 options="!check !fhs"
 makedepends="go bash" 
-source="$pkgname-$pkgver.tar.gz::https://github.com/rook/rook/archive/v$pkgver.tar.gz"
+source="$pkgname-$pkgver.tar.gz::https://github.com/rook/rook/archive/v$pkgver.tar.gz
+	multi-arm.patch"
 builddir="$srcdir/src/github.com/rook/$pkgname"
 subpackages="$pkgname-ceph"
 #export GOPATH="$startdir"
@@ -59,4 +60,5 @@ ceph() {
 	cp -r cluster/olm/ceph/templates $subpkgdir/etc/ceph-csv-templates
 	cp images/ceph/toolbox.sh $subpkgdir/usr/local/bin/
 }
-sha512sums="e9ada7b73e7142441608cc313e9191cb215e0446b98f5f1424b6b4c9260308146497916bed4dc217944c86c4262f7b976c77f739abbd470d79b0083154222a91  rook-1.2.1.tar.gz"
+sha512sums="e9ada7b73e7142441608cc313e9191cb215e0446b98f5f1424b6b4c9260308146497916bed4dc217944c86c4262f7b976c77f739abbd470d79b0083154222a91  rook-1.2.1.tar.gz
+469530bdb0f616ab19bc733065b001c20b1fe3c8be36dd6fde36bccbd231b03970becea8142a0e58bd425d84704830a75050b0e2a1d633bbe457c02234edda62  multi-arm.patch"
