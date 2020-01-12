@@ -7,7 +7,7 @@ url="https://github.com/root/root"
 arch="x86_64 aarch64 armv7"
 license="Apache-2.0"
 options="!check !fhs"
-makedepends="go" 
+makedepends="goi bash" 
 source="$pkgname-$pkgver.tar.gz::https://github.com/rook/rook/archive/v$pkgver.tar.gz"
 builddir="$srcdir/src/github.com/rook/$pkgname"
 subpackages="$pkgname-ceph"
@@ -42,6 +42,7 @@ package() {
 }
 
 ceph() {
+	depends="rook"
 	cd $builddir
 	mkdir -p $subpkgdir/etc/ $subpkgdir/usr/local/bin
 	cp -r cluster/examples/kubernetes/ceph/csi/template $subpkgdir/etc/ceph-csi
