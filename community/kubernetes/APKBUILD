@@ -7,7 +7,7 @@ pkgver=1.17.1
 pkgrel=0
 pkgdesc="Container Cluster Manager for Docker"
 url="https://kubernetes.io/"
-arch="x86_64 armhf armv7 aarch64"
+arch="x86_64 armv7 aarch64"
 license="Apache-2.0"
 options="!check" # Tests hang
 depends="bash"
@@ -88,7 +88,7 @@ cleanup_srcdir() {
 	default_cleanup_srcdir
 }
 
-sha512sums="906cdae9bf9ca04cd8b1ce869fa7e7af575127ccf1616b070a29d1a32861f96672c8f55e955942a86722d64a0a269cecf52707f6e5b1d853badfe28f10e1628f  kubernetes-1.17.0.tar.gz
+sha512sums="54abe855eeb859c0e9c2031c998250a9d04739b9e5a469040ac9b8e61caee384f9644934aedb2f79ece442d4513cf57fdea9bdedfb89c4e2cc8730c7049a09a7  kubernetes-1.17.1.tar.gz
 bfe072d2f53543b8d704319755f3cfe5ed2467b54879e22117a25a9d7d6d4d238356e45824deaf4d18b8e9eb6f34d1de43be4840b9906f7909478ffe9e8a65ff  ensure-cgo-usage.patch
 8faa8f1c777740ed33ac4e46e8e47e9092098b6e672cf57a10caab2212b9b5c6965361fe7107d1311227e6145e2ad312982dc0340feb36b03ebb04e1202366f0  make-e2e_node-run-over-distro-bins.patch
 13f90690564664cc1d7ca26ed3f62fea42b84050f8fd2432ff16fce21d42c7a2e9935739ab4dcb01b5289879522ecdd2d00bfe01337c3836766ce430f513245f  bindata.patch
