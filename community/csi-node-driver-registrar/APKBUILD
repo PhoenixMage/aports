@@ -23,7 +23,7 @@ prepare() {
 
 
 build() {
-	make
+	go build -v -o bin/csi-node-driver-registrar ./cmd
 }
 
 package() {
