@@ -1,0 +1,45 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=external-snapshotter
+pkgver=2.0.0
+pkgrel=0
+pkgdesc="Sidecar container that watches Kubernetes VolumeAttachment objects"
+url="https://github.com/kubernetes-csi/external-snapshotter/"
+arch="x86_64 aarch64 armv7"
+license="Apache-2.0"
+options="!check"
+makedepends="go bash" 
+source="$pkgname-$pkgver.tar.gz::https://github.com/kubernetes-csi/$pkgname/archive/v$pkgver.tar.gz"
+builddir="$srcdir/src/github.com/kubernetes-csi/$pkgname"
+subpackages="csi-snapshotter"
+export GOPATH="$srcdir"
+
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 1
+	cd "$builddir"
+	default_prepare
+}
+
+
+build() {
+	make
+}
+
+package() {
+	echo Main package
+	mkdir -p $pkgdir
+	chmod -R u+w $srcdir || return 0
+}
+
+snapshotter() {
+	cd $builddir
+	mkdir -p $subpkgdir/usr/bin
+	cp bin/csi-snapshotter $subpkgdir/usr/bin/
+}
+clean() {
+	chmod -R u+w $srcdir || return 0
+	rm -rf $srcdir
+}
+
+sha512sums="eaf9200d51214d823ca0fcc44b04993072892da7360aa3366200deac41e1da58ba31a018e9bb4e43026619f71cd9cfa725bd103a2794cda6c5cf760859baadae  external-snapshotter-2.0.0.tar.gz"
