@@ -1,0 +1,45 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=node-driver-registrar
+pkgver=1.2.0
+pkgrel=0
+pkgdesc="Sidecar container that registers a CSI driver with the kubelet."
+url="https://github.com/kubernetes-csi/node-driver-registrar/"
+arch="x86_64 aarch64 armv7"
+license="Apache-2.0"
+options="!check"
+makedepends="go bash" 
+source="$pkgname-$pkgver.tar.gz::https://github.com/kubernetes-csi/$pkgname/archive/v$pkgver.tar.gz"
+builddir="$srcdir/src/github.com/kubernetes-csi/$pkgname"
+subpackages="csi-node-driver-registrar"
+export GOPATH="$srcdir"
+
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 1
+	cd "$builddir"
+	default_prepare
+}
+
+
+build() {
+	make
+}
+
+package() {
+	echo Main package
+	mkdir -p $pkgdir
+	chmod -R u+w $srcdir || return 0
+}
+
+registrar() {
+	cd $builddir
+	mkdir -p $subpkgdir/usr/bin
+	cp bin/csi-node-driver-registrar $subpkgdir/usr/bin/
+}
+clean() {
+	chmod -R u+w $srcdir || return 0
+	rm -rf $srcdir
+}
+
+sha512sums="364276d0f832b95bc853128a08346c73b66690e70a9277481249cf667e0499dc71eeddd2dd583de8663445cc935bcf32b27f19cd39f974f8e4e4605148481adb  node-driver-registrar-1.2.0.tar.gz"
