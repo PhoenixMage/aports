@@ -1,0 +1,35 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=ceph-csi
+pkgver=1.2.2
+pkgrel=0
+pkgdesc="Ceph CSI Sidecar container"
+url="https://github.com/kubernetes-csi/ceph-csi/"
+arch="x86_64 aarch64 armv7"
+license="Apache-2.0"
+options="!check"
+makedepends="go bash" 
+source="$pkgname-$pkgver.tar.gz::https://github.com/ceph/$pkgname/archive/v$pkgver.tar.gz"
+builddir="$srcdir/src/github.com/ceph/$pkgname"
+export GOPATH="$srcdir"
+
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 1
+	cd "$builddir"
+	default_prepare
+}
+
+
+build() {
+	cd $builddir
+	go build -o _output/cephcsi ./cmd/
+}
+
+package() {
+	cd $builddir
+	mkdir -p $pkgdir/usr/bin
+	cp _output/cephcsi $pkgdir/usr/bin
+}
+
+sha512sums="9c8e19e71874df001e6e81739f89ee7d9cd124ce916029532d5324d40d55071407b7e1a3db96a0a79277d77b3bfcec6096f630557f5e1193f4c827484d13607b  ceph-csi-1.2.2.tar.gz"
