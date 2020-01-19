@@ -1,0 +1,43 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=kaniko
+pkgver=0.16.0
+pkgrel=0
+pkgdesc="Build Container Images In Kubernetes"
+url="https://github.com/GoogleContainerTools/kaniko"
+arch="x86_64 aarch64 armv7"
+license="Apache-2.0"
+options="!check"
+makedepends="go bash" 
+source="$pkgname-$pkgver.tar.gz::https://github.com/GoogleContainerTools/$pkgname/archive/v$pkgver.tar.gz"
+builddir="$srcdir/src/github.com/GoogleContainerTools/$pkgname"
+export GOPATH="$srcdir"
+
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 0
+	cd "$builddir"
+	sed -i -e '/^GOARCH *= *amd64$/d' Makefile
+	default_prepare
+}
+
+
+build() {
+	case "$CARCH" in
+		arm*) GOARCH=arm make;;
+		aarch64) GOARCH=arm64 make;;
+		x86_64) GOARCH=amd64 make;;
+	esac
+}
+
+package() {
+	cd $builddir
+	mkdir -p $pkgdir/usr/bin
+	cp $builddir/out/executor $pkgdir/usr/bin
+}
+
+clean() {
+	rm -rf $srcdir $startdir/pkg
+}
+
+sha512sums="13391b226a4c6827ec37dfcd3a94d3ada9d93b4f024a0afddd44ea01667b3c5fb7a011e7793b72cb83646891d536224470f540c22ae7f7c88e60486686a21db2  kaniko-0.16.0.tar.gz"
