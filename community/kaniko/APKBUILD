@@ -17,7 +17,7 @@ prepare() {
 	mkdir -p ${builddir%/*}
 	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 0
 	cd "$builddir"
-	sed -i -e '/^GOARCH=amda64/d' Makefile
+	sed -i -e '/^GOARCH *= *amd64$/d' Makefile
 	default_prepare
 }
 
