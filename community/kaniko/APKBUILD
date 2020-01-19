@@ -17,6 +17,7 @@ prepare() {
 	mkdir -p ${builddir%/*}
 	mv "$srcdir"/$pkgname-$pkgver "$builddir"/ || return 0
 	cd "$builddir"
+	sed -i -e '/^GOARCH=amda64/d' Makefile
 	default_prepare
 }
 
@@ -33,6 +34,10 @@ package() {
 	cd $builddir
 	mkdir -p $pkgdir/usr/bin
 	cp $builddir/out/executor $pkgdir/usr/bin
+}
+
+clean() {
+	rm -rf $srcdir $startdir/pkg
 }
 
 sha512sums="13391b226a4c6827ec37dfcd3a94d3ada9d93b4f024a0afddd44ea01667b3c5fb7a011e7793b72cb83646891d536224470f540c22ae7f7c88e60486686a21db2  kaniko-0.16.0.tar.gz"
