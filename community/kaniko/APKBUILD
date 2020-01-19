@@ -22,6 +22,11 @@ prepare() {
 
 
 build() {
+	case "$CARCH" in
+		arm*) GOARCH=arm
+		aarch64) GOARCH=arm64
+		x86_64) GOARCH=amd64
+	esac
 	make
 }
 
