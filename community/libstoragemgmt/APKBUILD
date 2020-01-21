@@ -2,7 +2,7 @@
 # Maintainer:
 pkgname="libstoragemgmt"
 pkgver="1.8.2"
-pkgrel=1
+pkgrel=2
 pkgdesc="Storage array management library"
 url="https://github.com/libstorage/libstoragemgmt"
 arch="x86_64 armhf armv7"
