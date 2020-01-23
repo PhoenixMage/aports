@@ -1,7 +1,7 @@
 Only in b: 646_rebase_with_goarm.patch
 diff -aur a/Makefile b/Makefile
 --- a/Makefile	2020-01-18 05:46:16.000000000 +1100
-+++ b/Makefile	2020-01-23 14:09:20.906809140 +1100
++++ b/Makefile	2020-01-23 22:10:12.266439075 +1100
 @@ -18,10 +18,12 @@
  VERSION_BUILD ?= 0
  
@@ -16,7 +16,14 @@ diff -aur a/Makefile b/Makefile
  ORG := github.com/GoogleContainerTools
  PROJECT := kaniko
  REGISTRY?=gcr.io/kaniko-project
-@@ -38,7 +40,7 @@
+@@ -32,13 +34,14 @@
+ GO_FILES := $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+ GO_LDFLAGS := '-extldflags "-static"
+ GO_LDFLAGS += -X $(VERSION_PACKAGE).version=$(VERSION)
++GO_LDFLAGS += -X currentPlatform.goarm=$(GOARM)
+ GO_LDFLAGS += -w -s # Drop debugging symbols.
+ GO_LDFLAGS += '
+ 
  EXECUTOR_PACKAGE = $(REPOPATH)/cmd/executor
  WARMER_PACKAGE = $(REPOPATH)/cmd/warmer
  KANIKO_PROJECT = $(REPOPATH)/kaniko
@@ -25,7 +32,7 @@ diff -aur a/Makefile b/Makefile
  
  # Force using Go Modules and always read the dependencies from
  # the `vendor` folder.
-@@ -47,10 +49,10 @@
+@@ -47,10 +50,10 @@
  
  
  out/executor: $(GO_FILES)
@@ -38,7 +45,7 @@ diff -aur a/Makefile b/Makefile
  
  .PHONY: test
  test: out/executor
-@@ -62,9 +64,9 @@
+@@ -62,9 +65,9 @@
  
  .PHONY: images
  images:
@@ -129,7 +136,7 @@ diff -aur a/pkg/util/image_util.go b/pkg/util/image_util.go
  func cachedImage(opts *config.KanikoOptions, image string) (v1.Image, error) {
 diff -aur a/pkg/util/util.go b/pkg/util/util.go
 --- a/pkg/util/util.go	2020-01-18 05:46:16.000000000 +1100
-+++ b/pkg/util/util.go	2020-01-23 21:11:21.592763259 +1100
++++ b/pkg/util/util.go	2020-01-23 22:08:35.790883070 +1100
 @@ -22,13 +22,18 @@
  	"encoding/hex"
  	"io"
@@ -149,15 +156,17 @@ diff -aur a/pkg/util/util.go b/pkg/util/util.go
  )
  
  // ConfigureLogging sets the logrus logging level and forces logs to be colorful (!)
-@@ -138,3 +143,26 @@
+@@ -138,3 +143,28 @@
  	}
  	return hex.EncodeToString(hasher.Sum(make([]byte, 0, hasher.Size()))), nil
  }
 +
 +// CurrentPlatform returns the v1.Platform on which the code runs
 +func currentPlatform() v1.Platform {
-+	var goarm string = os.Getenv("GOARM")
++	var goarm string
 +	var arch_variant string
++	fmt.Println("goarm is:")
++	fmt.Println(goarm)
 +	if strings.HasPrefix(runtime.GOARCH, "arm") {
 +		fmt.Println("is arm architecture")
 +		switch goarm {
