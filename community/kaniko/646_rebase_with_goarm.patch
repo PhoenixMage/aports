@@ -136,8 +136,8 @@ diff -aur a/pkg/util/image_util.go b/pkg/util/image_util.go
  func cachedImage(opts *config.KanikoOptions, image string) (v1.Image, error) {
 diff -aur a/pkg/util/util.go b/pkg/util/util.go
 --- a/pkg/util/util.go	2020-01-18 05:46:16.000000000 +1100
-+++ b/pkg/util/util.go	2020-01-23 22:08:35.790883070 +1100
-@@ -22,13 +22,18 @@
++++ b/pkg/util/util.go	2020-01-23 22:45:36.853096121 +1100
+@@ -22,15 +22,22 @@
  	"encoding/hex"
  	"io"
  	"os"
@@ -155,15 +155,18 @@ diff -aur a/pkg/util/util.go b/pkg/util/util.go
 +	"github.com/google/go-containerregistry/pkg/v1"
  )
  
++var goarm string
++
  // ConfigureLogging sets the logrus logging level and forces logs to be colorful (!)
-@@ -138,3 +143,28 @@
+ func ConfigureLogging(logLevel string) error {
+ 	lvl, err := logrus.ParseLevel(logLevel)
+@@ -138,3 +145,27 @@
  	}
  	return hex.EncodeToString(hasher.Sum(make([]byte, 0, hasher.Size()))), nil
  }
 +
 +// CurrentPlatform returns the v1.Platform on which the code runs
 +func currentPlatform() v1.Platform {
-+	var goarm string
 +	var arch_variant string
 +	fmt.Println("goarm is:")
 +	fmt.Println(goarm)
