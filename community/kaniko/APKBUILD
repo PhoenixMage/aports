@@ -1,7 +1,7 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=kaniko
 pkgver=0.16.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Build Container Images In Kubernetes"
 url="https://github.com/GoogleContainerTools/kaniko"
 arch="x86_64 aarch64 armv7"
@@ -9,7 +9,7 @@ license="Apache-2.0"
 options="!check"
 makedepends="go bash" 
 source="$pkgname-$pkgver.tar.gz::https://github.com/GoogleContainerTools/$pkgname/archive/v$pkgver.tar.gz
-	646_rebase.patch"
+	646_rebase_with_goarm.patch"
 builddir="$srcdir/src/github.com/GoogleContainerTools/$pkgname"
 export GOPATH="$srcdir"
 
@@ -23,6 +23,7 @@ prepare() {
 
 
 build() {
+	go env $GOARM
 	make
 }
 
@@ -37,4 +38,4 @@ clean() {
 }
 
 sha512sums="13391b226a4c6827ec37dfcd3a94d3ada9d93b4f024a0afddd44ea01667b3c5fb7a011e7793b72cb83646891d536224470f540c22ae7f7c88e60486686a21db2  kaniko-0.16.0.tar.gz
-b3d6ff9961e6d4c35663a5fbc05fed6b5e8d0fd114fb3da6c2d5601db872186119469a3a6192cdbe153a89a38cf01c42dd3d73d5d5b73bf335b6fd65c9f7ad3b  646_rebase.patch"
+081879f76a07f089e4628b40fa12e4dda88fa3d3184fb780d02f3b1caf1f661011d00ea919e0c88d2d055c8f8f663ee845860aa29f1707ea841f7d39c17038b1  646_rebase_with_goarm.patch"
