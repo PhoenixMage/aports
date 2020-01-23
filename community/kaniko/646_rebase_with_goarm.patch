@@ -1,3 +1,4 @@
+Only in b: 646_rebase_with_goarm.patch
 diff -aur a/Makefile b/Makefile
 --- a/Makefile	2020-01-18 05:46:16.000000000 +1100
 +++ b/Makefile	2020-01-23 14:09:20.906809140 +1100
@@ -110,6 +111,7 @@ diff -aur a/deploy/Dockerfile_warmer b/deploy/Dockerfile_warmer
  
  FROM scratch
  COPY --from=0 /go/src/github.com/GoogleContainerTools/kaniko/out/warmer /kaniko/warmer
+Only in b: out
 diff -aur a/pkg/util/image_util.go b/pkg/util/image_util.go
 --- a/pkg/util/image_util.go	2020-01-18 05:46:16.000000000 +1100
 +++ b/pkg/util/image_util.go	2020-01-23 13:55:00.525196171 +1100
@@ -127,8 +129,8 @@ diff -aur a/pkg/util/image_util.go b/pkg/util/image_util.go
  func cachedImage(opts *config.KanikoOptions, image string) (v1.Image, error) {
 diff -aur a/pkg/util/util.go b/pkg/util/util.go
 --- a/pkg/util/util.go	2020-01-18 05:46:16.000000000 +1100
-+++ b/pkg/util/util.go	2020-01-23 13:55:00.525196171 +1100
-@@ -22,6 +22,7 @@
++++ b/pkg/util/util.go	2020-01-23 20:23:38.086928023 +1100
+@@ -22,13 +22,17 @@
  	"encoding/hex"
  	"io"
  	"os"
@@ -136,7 +138,8 @@ diff -aur a/pkg/util/util.go b/pkg/util/util.go
  	"strconv"
  	"sync"
  	"syscall"
-@@ -29,6 +30,8 @@
++	"strings"
+ 
  	"github.com/minio/highwayhash"
  	"github.com/pkg/errors"
  	"github.com/sirupsen/logrus"
@@ -145,15 +148,28 @@ diff -aur a/pkg/util/util.go b/pkg/util/util.go
  )
  
  // ConfigureLogging sets the logrus logging level and forces logs to be colorful (!)
-@@ -138,3 +141,11 @@
+@@ -138,3 +142,24 @@
  	}
  	return hex.EncodeToString(hasher.Sum(make([]byte, 0, hasher.Size()))), nil
  }
 +
 +// CurrentPlatform returns the v1.Platform on which the code runs
 +func currentPlatform() v1.Platform {
++	var goarm string = os.Getenv("GOARM")
++	var arch_variant string
++	if strings.HasPrefix(runtime.GOARCH, "arm") {
++		switch goarm {
++		case "6":
++			arch_variant="v6"
++		case "7":
++			arch_variant="v7"
++		case "8":
++			arch_variant="v8"
++		}
++	}
 +	return v1.Platform{
 +		OS:           runtime.GOOS,
 +		Architecture: runtime.GOARCH,
++		Variant:      arch_variant,
 +	}
 +}
