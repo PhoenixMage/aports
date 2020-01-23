@@ -1,6 +1,6 @@
 diff -aur a/Makefile b/Makefile
 --- a/Makefile	2020-01-18 05:46:16.000000000 +1100
-+++ b/Makefile	2020-01-23 13:55:19.854333782 +1100
++++ b/Makefile	2020-01-23 14:09:20.906809140 +1100
 @@ -18,10 +18,12 @@
  VERSION_BUILD ?= 0
  
@@ -24,6 +24,19 @@ diff -aur a/Makefile b/Makefile
  
  # Force using Go Modules and always read the dependencies from
  # the `vendor` folder.
+@@ -47,10 +49,10 @@
+ 
+ 
+ out/executor: $(GO_FILES)
+-	GOARCH=$(GOARCH) GOOS=linux CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(EXECUTOR_PACKAGE)
++	GOARCH=$(GOARCH) GOARM=$(GOARM) GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(EXECUTOR_PACKAGE)
+ 
+ out/warmer: $(GO_FILES)
+-	GOARCH=$(GOARCH) GOOS=linux CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(WARMER_PACKAGE)
++	GOARCH=$(GOARCH) GOARM=$(GOARM) GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(WARMER_PACKAGE)
+ 
+ .PHONY: test
+ test: out/executor
 @@ -62,9 +64,9 @@
  
  .PHONY: images
