@@ -1,0 +1,190 @@
+Only in b: Dockerfile
+diff -aur a/Makefile b/Makefile
+--- a/Makefile	2020-01-18 05:46:16.000000000 +1100
++++ b/Makefile	2020-01-23 23:55:52.430001320 +1100
+@@ -18,27 +18,31 @@
+ VERSION_BUILD ?= 0
+ 
+ VERSION ?= v$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_BUILD)
++VERSION_PACKAGE = $(REPOPATH/pkg/version)
+ 
+ SHELL := /bin/bash
+ GOOS ?= $(shell go env GOOS)
+-GOARCH = amd64
++GOARCH ?= $(shell go env GOARCH)
++GOARM ?= $(shell go env GOARM)
+ ORG := github.com/GoogleContainerTools
+ PROJECT := kaniko
+ REGISTRY?=gcr.io/kaniko-project
+ 
+ REPOPATH ?= $(ORG)/$(PROJECT)
+ VERSION_PACKAGE = $(REPOPATH)/pkg/version
++UTIL_PACKAGE = $(REPOPATH)/pkg/util
+ 
+ GO_FILES := $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+ GO_LDFLAGS := '-extldflags "-static"
+ GO_LDFLAGS += -X $(VERSION_PACKAGE).version=$(VERSION)
++GO_LDFLAGS += -X $(UTIL_PACKAGE).goarm=$(GOARM)
+ GO_LDFLAGS += -w -s # Drop debugging symbols.
+ GO_LDFLAGS += '
+ 
+ EXECUTOR_PACKAGE = $(REPOPATH)/cmd/executor
+ WARMER_PACKAGE = $(REPOPATH)/cmd/warmer
+ KANIKO_PROJECT = $(REPOPATH)/kaniko
+-BUILD_ARG ?= 
++BUILD_ARG ?=
+ 
+ # Force using Go Modules and always read the dependencies from
+ # the `vendor` folder.
+@@ -47,10 +51,10 @@
+ 
+ 
+ out/executor: $(GO_FILES)
+-	GOARCH=$(GOARCH) GOOS=linux CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(EXECUTOR_PACKAGE)
++	GOARCH=$(GOARCH) GOARM=$(GOARM) GOOS=$(GOOS) CGO_ENABLED=1 go build -ldflags $(GO_LDFLAGS) -o $@ $(EXECUTOR_PACKAGE)
+ 
+ out/warmer: $(GO_FILES)
+-	GOARCH=$(GOARCH) GOOS=linux CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(WARMER_PACKAGE)
++	GOARCH=$(GOARCH) GOARM=$(GOARM) GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags $(GO_LDFLAGS) -o $@ $(WARMER_PACKAGE)
+ 
+ .PHONY: test
+ test: out/executor
+@@ -62,9 +66,9 @@
+ 
+ .PHONY: images
+ images:
+-	docker build ${BUILD_ARG} -t $(REGISTRY)/executor:latest -f deploy/Dockerfile .
+-	docker build ${BUILD_ARG} -t $(REGISTRY)/executor:debug -f deploy/Dockerfile_debug .
+-	docker build ${BUILD_ARG} -t $(REGISTRY)/warmer:latest -f deploy/Dockerfile_warmer .
++	docker build ${BUILD_ARG} --build-arg=GOARCH=$(GOARCH) -t $(REGISTRY)/executor:latest -f deploy/Dockerfile .
++	docker build ${BUILD_ARG} --build-arg=GOARCH=$(GOARCH) -t $(REGISTRY)/executor:debug -f deploy/Dockerfile_debug .
++	docker build ${BUILD_ARG} --build-arg=GOARCH=$(GOARCH) -t $(REGISTRY)/warmer:latest -f deploy/Dockerfile_warmer .
+ 
+ .PHONY: push
+ push:
+diff -aur a/deploy/Dockerfile b/deploy/Dockerfile
+--- a/deploy/Dockerfile	2020-01-18 05:46:16.000000000 +1100
++++ b/deploy/Dockerfile	2020-01-23 23:46:30.734939065 +1100
+@@ -15,6 +15,7 @@
+ # Builds the static Go image to execute in a Kubernetes job
+ 
+ FROM golang:1.12
++ARG GOARCH=amd64
+ WORKDIR /go/src/github.com/GoogleContainerTools/kaniko
+ # Get GCR credential helper
+ ADD https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v1.5.0/docker-credential-gcr_linux_amd64-1.5.0.tar.gz /usr/local/bin/
+@@ -28,7 +29,7 @@
+ RUN tar -C /usr/local/bin/ -xvzf /usr/local/bin/docker-credential-acr-linux-amd64.tar.gz
+ 
+ COPY . .
+-RUN make
++RUN make GOARCH=${GOARCH}
+ 
+ FROM scratch
+ COPY --from=0 /go/src/github.com/GoogleContainerTools/kaniko/out/executor /kaniko/executor
+diff -aur a/deploy/Dockerfile_debug b/deploy/Dockerfile_debug
+--- a/deploy/Dockerfile_debug	2020-01-18 05:46:16.000000000 +1100
++++ b/deploy/Dockerfile_debug	2020-01-23 23:46:30.734939065 +1100
+@@ -16,6 +16,7 @@
+ 
+ # Stage 0: Build the executor binary and get credential helpers
+ FROM golang:1.12
++ARG GOARCH=amd64
+ WORKDIR /go/src/github.com/GoogleContainerTools/kaniko
+ # Get GCR credential helper
+ ADD https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v1.5.0/docker-credential-gcr_linux_amd64-1.5.0.tar.gz /usr/local/bin/
+@@ -25,7 +26,7 @@
+ RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
+ RUN make -C /go/src/github.com/awslabs/amazon-ecr-credential-helper linux-amd64 
+ COPY . .
+-RUN make && make out/warmer
++RUN make GOARCH=${GOARCH} && make out/warmer
+ 
+ # Stage 1: Get the busybox shell
+ FROM gcr.io/cloud-builders/bazel:latest
+diff -aur a/deploy/Dockerfile_warmer b/deploy/Dockerfile_warmer
+--- a/deploy/Dockerfile_warmer	2020-01-18 05:46:16.000000000 +1100
++++ b/deploy/Dockerfile_warmer	2020-01-23 23:46:30.734939065 +1100
+@@ -15,6 +15,7 @@
+ # Builds the static Go image to execute in a Kubernetes job
+ 
+ FROM golang:1.12
++ARG GOARCH=amd64
+ WORKDIR /go/src/github.com/GoogleContainerTools/kaniko
+ # Get GCR credential helper
+ ADD https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v1.5.0/docker-credential-gcr_linux_amd64-1.5.0.tar.gz /usr/local/bin/
+@@ -25,7 +26,7 @@
+ RUN make -C /go/src/github.com/awslabs/amazon-ecr-credential-helper linux-amd64
+ 
+ COPY . .
+-RUN make out/warmer
++RUN make GOARCH=${GOARCH} out/warmer
+ 
+ FROM scratch
+ COPY --from=0 /go/src/github.com/GoogleContainerTools/kaniko/out/warmer /kaniko/warmer
+Only in b: out
+diff -aur a/pkg/util/image_util.go b/pkg/util/image_util.go
+--- a/pkg/util/image_util.go	2020-01-18 05:46:16.000000000 +1100
++++ b/pkg/util/image_util.go	2020-01-23 23:46:30.734939065 +1100
+@@ -134,7 +134,10 @@
+ 		}
+ 	}
+ 
+-	return []remote.Option{remote.WithTransport(tr), remote.WithAuthFromKeychain(creds.GetKeychain())}
++	// on which v1.Platform is this currently running?
++	platform := currentPlatform()
++
++	return []remote.Option{remote.WithTransport(tr), remote.WithAuthFromKeychain(creds.GetKeychain()), remote.WithPlatform(platform)}
+ }
+ 
+ func cachedImage(opts *config.KanikoOptions, image string) (v1.Image, error) {
+diff -aur a/pkg/util/util.go b/pkg/util/util.go
+--- a/pkg/util/util.go	2020-01-18 05:46:16.000000000 +1100
++++ b/pkg/util/util.go	2020-01-23 23:55:19.141479229 +1100
+@@ -22,15 +22,22 @@
+ 	"encoding/hex"
+ 	"io"
+ 	"os"
++	"runtime"
+ 	"strconv"
+ 	"sync"
+ 	"syscall"
++	"strings"
+ 
+ 	"github.com/minio/highwayhash"
+ 	"github.com/pkg/errors"
+ 	"github.com/sirupsen/logrus"
++
++	"github.com/google/go-containerregistry/pkg/v1"
+ )
+ 
++var goarm string
++
++
+ // ConfigureLogging sets the logrus logging level and forces logs to be colorful (!)
+ func ConfigureLogging(logLevel string) error {
+ 	lvl, err := logrus.ParseLevel(logLevel)
+@@ -138,3 +145,23 @@
+ 	}
+ 	return hex.EncodeToString(hasher.Sum(make([]byte, 0, hasher.Size()))), nil
+ }
++
++// CurrentPlatform returns the v1.Platform on which the code runs
++func currentPlatform() v1.Platform {
++	var arch_variant string
++	if strings.HasPrefix(runtime.GOARCH, "arm") {
++		switch goarm {
++		case "6":
++			arch_variant="v6"
++		case "7":
++			arch_variant="v7"
++		case "8":
++			arch_variant="v8"
++		}
++	}
++	return v1.Platform{
++		OS:           runtime.GOOS,
++		Architecture: runtime.GOARCH,
++		Variant:      arch_variant,
++	}
++}
