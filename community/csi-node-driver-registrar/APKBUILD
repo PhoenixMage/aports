@@ -23,6 +23,7 @@ prepare() {
 
 
 build() {
+	sed -i -e '/windows/d' release-tools/build.make
 	make
 }
 
