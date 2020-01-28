@@ -1,7 +1,7 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=node-driver-registrar
-pkgver=1.2.0
-pkgrel=1
+pkgver=1.1.0
+pkgrel=0
 pkgdesc="Sidecar container that registers a CSI driver with the kubelet."
 url="https://github.com/kubernetes-csi/node-driver-registrar/"
 arch="x86_64 aarch64 armv7"
@@ -37,4 +37,4 @@ registrar() {
 	cp bin/csi-node-driver-registrar $subpkgdir/usr/bin/
 }
 
-sha512sums="364276d0f832b95bc853128a08346c73b66690e70a9277481249cf667e0499dc71eeddd2dd583de8663445cc935bcf32b27f19cd39f974f8e4e4605148481adb  node-driver-registrar-1.2.0.tar.gz"
+sha512sums="29d4eba8576a042eb1cae2fec2371e043d035fa7d0001d6b94a8fe6de6dbe443b5aa3fa752c852bf32b38433906e1ad5df03ffad3d609884d86e463f9f8eb992  node-driver-registrar-1.1.0.tar.gz"
