@@ -1,6 +1,6 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=external-attacher
-pkgver=2.1.0
+pkgver=1.2.0
 pkgrel=0
 pkgdesc="Sidecar container that watches Kubernetes VolumeAttachment objects"
 url="https://github.com/kubernetes-csi/external-attacher/"
@@ -27,20 +27,13 @@ build() {
 }
 
 package() {
-	echo Main package
 	mkdir -p $pkgdir
-	chmod -R u+w $srcdir || return 0
 }
 
 attacher() {
-	echo Packaging csi-attacher
 	cd $builddir
 	mkdir -p $subpkgdir/usr/bin
 	cp bin/csi-attacher $subpkgdir/usr/bin/
 }
-clean() {
-	chmod -R u+w $srcdir || return 0
-	rm -rf $srcdir
-}
 
-sha512sums="ee0af771eb18e64e5f7abada2f14a86491caea6e5083202daa268ae105de0b9367c2f044433f555c82f39b711ca82124f0a1c89648a5d9b72c2f0ace92b42b09  external-attacher-2.1.0.tar.gz"
+sha512sums="7bf0b7472cbe3715ccca9d060ed907af1b63d8d79477caceca2d2ba2efd2d45423f71ee5ce77408734ed9faf0a6d37c092ec25c6f4db4282d83476e04802a8fe  external-attacher-1.2.0.tar.gz"
