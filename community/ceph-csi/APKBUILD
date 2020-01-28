@@ -1,6 +1,6 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=ceph-csi
-pkgver=1.2.2
+pkgver=2.0.0
 pkgrel=0
 pkgdesc="Ceph CSI Sidecar container"
 url="https://github.com/kubernetes-csi/ceph-csi/"
@@ -23,7 +23,8 @@ prepare() {
 
 build() {
 	cd $builddir
-	go build -o _output/cephcsi ./cmd/
+	sed -i -e 's/LDFLAGS ?=$/LDFLAGS =/' Makefile
+	make
 }
 
 package() {
@@ -32,4 +33,4 @@ package() {
 	cp _output/cephcsi $pkgdir/usr/bin
 }
 
-sha512sums="9c8e19e71874df001e6e81739f89ee7d9cd124ce916029532d5324d40d55071407b7e1a3db96a0a79277d77b3bfcec6096f630557f5e1193f4c827484d13607b  ceph-csi-1.2.2.tar.gz"
+sha512sums="e872b914ffd63eff6c68cec28d9bd1ab554fc93e642d7975a3f52a90eaa7eef7bc8790605306c05dce085a8f57cd5181d9347ee4d888eaa7782b143e749bceba  ceph-csi-2.0.0.tar.gz"
