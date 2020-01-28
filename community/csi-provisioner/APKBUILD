@@ -1,6 +1,6 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=external-provisioner
-pkgver=1.5.0
+pkgver=1.4.0
 pkgrel=0
 pkgdesc="Sidecar container that watches Kubernetes PersistentVolumeClaim objects"
 url="https://github.com/kubernetes-csi/external-provisioner/"
@@ -43,4 +43,4 @@ clean() {
 	rm -rf $srcdir
 }
 
-sha512sums="fbb9cc0589aa99c53a0645aeea7f836d8ab7ee279fcb4ad98ef4aec8294f9a41b924be4e0565854a8ac188553acb973aa1d1cfe04be356e61819351fec3d7ba7  external-provisioner-1.5.0.tar.gz"
+sha512sums="dc68c556a7c0838ace415c05b28a4baf99c1f8bc0d7959721dfdfd4f5615e1a537a0987da2c2200acb56f7d3eaee345efb1ca254b59110d5d34c63e40d5d7f57  external-provisioner-1.4.0.tar.gz"
