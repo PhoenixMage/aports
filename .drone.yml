@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: edge-armv7
+name: v3.11-armv7
 
 platform:
   os: linux
@@ -15,7 +15,7 @@ workspace:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci:edge-armv7
+  image: phoenixmage/alpine-drone-ci:v3.11-armv7
   environment:
     PKG_SIGN_KEY:
       from_secret: pkg_sign_key
@@ -38,7 +38,7 @@ trigger:
     - pull_request
 ---
 kind: pipeline
-name: edge-aarch64
+name: v3.11-aarch64
 
 platform:
   os: linux
@@ -53,7 +53,7 @@ workspace:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci:edge-aarch64
+  image: phoenixmage/alpine-drone-ci:v3.11-aarch64
   environment:
     PKG_SIGN_KEY:
       from_secret: pkg_sign_key
