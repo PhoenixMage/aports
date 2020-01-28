@@ -1,6 +1,6 @@
 # Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
 pkgname=external-snapshotter
-pkgver=2.0.1
+pkgver=1.2.2
 pkgrel=0
 pkgdesc="Sidecar container that watches Kubernetes VolumeAttachment objects"
 url="https://github.com/kubernetes-csi/external-snapshotter/"
@@ -37,4 +37,4 @@ snapshotter() {
 	cp bin/csi-snapshotter $subpkgdir/usr/bin/
 }
 
-sha512sums="93250db492d073a2a039500ec17793f58fb5442e00be72f8f1a68c05fea3bda1f4120f4b4b15fec64ae503b527f0a37f3879db389b0110326b06ccc36975ec99  external-snapshotter-2.0.1.tar.gz"
+sha512sums="63f8df51d7dc07020d091473670e0fa3ff1f7749127edb54ab899c9d5dec4307a412d89a319ee6f5951e7b9febf9b88821f6114703e828c39e6733bb1ed95816  external-snapshotter-1.2.2.tar.gz"
