@@ -12,7 +12,6 @@ source="$pkgname-$pkgver.tar.gz::https://github.com/rook/rook/archive/v$pkgver.t
 	multi-arm.patch"
 builddir="$srcdir/src/github.com/rook/$pkgname"
 subpackages="$pkgname-ceph"
-#export GOPATH="$startdir"
 export GOPATH="$srcdir"
 
 
@@ -40,15 +39,12 @@ build() {
 }
 
 package() {
-	echo Packaging rook
 	cd $builddir
 	mkdir -p $pkgdir/usr/bin
-	cp _output/bin/rook $pkgdir/usr/bin/
-
+	find _output -name rook -exec cp {} $pkgdir/usr/bin/ \;
 }
 
 ceph() {
-	echo Packaging rook-ceph
 	depends="rook"
 	cd $builddir
 	mkdir -p $subpkgdir/etc/ $subpkgdir/usr/local/bin
