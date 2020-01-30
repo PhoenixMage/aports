@@ -4,7 +4,7 @@
 # Test 1
 pkgname=ceph
 pkgver=14.2.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Ceph is a distributed object store and file system"
 pkgusers="ceph"
 pkggroups="ceph"
@@ -103,6 +103,8 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	rbd-nbd.cc.patch
 	Striper.cc.patch
 	BlueStore.cc.patch
+
+	git_search_fix.patch
 	"
 subpackages="
 	$pkgname-doc
@@ -164,7 +166,8 @@ _py3_sitelib() {
 build() {
 	export CEPH_BUILD_VIRTUALENV="$builddir"
 
-	mkdir -p "$builddir"/build
+	mkdir -p "$builddir"/build/src
+	cp "$builddir"/src/.git_version "$builddir"/build/src
 	cd "$builddir"/build
 
 	echo "Building for CARCH $CARCH"
@@ -229,7 +232,7 @@ build() {
 		  ;;
 	esac
 
-	make
+	make -j 8
 
 }
 
@@ -581,4 +584,5 @@ bf5b6d2a94eaedcc6316702c5ddbc3e11ab2662f275a0750b314b216b1130c1fc0d00c12780cde3c
 4f62fc054789bdbbc0e10a5f6a9cd188eba51b5cfa64c401fc9daca3c013603b1c795420959fb921c19d5c8a7869f9f008807796cb5692182eda6223e582711b  boost-1.72.patch
 e1a2f47b2abfd242867376dab6b773d433a0785a0a1fdfc1aa1dbf4fd6ff4fe6eff605ff787c88e01a2b2d0c28510aed3d650b29d5cb188ac4e64ff17928d2e2  rbd-nbd.cc.patch
 5c599c3133397de17463d9329b9eb69a3579ddbd7d97a858c072fe8afcb620b1ee45d20a8f36781ec4242dc958236137dfb8db19f3686ea1c74ae1f729381c4a  Striper.cc.patch
-f97ea5f1d9b1234bc4df3722683a14d790ec17829a5710c347dea2bc1c547f81249405f1c12167c28c7b672e8c5c66f402ee9874d8577bf566d9898248a8709e  BlueStore.cc.patch"
+f97ea5f1d9b1234bc4df3722683a14d790ec17829a5710c347dea2bc1c547f81249405f1c12167c28c7b672e8c5c66f402ee9874d8577bf566d9898248a8709e  BlueStore.cc.patch
+08dcd9676cb8ad5a679b3f42daabf31889cff45d122603d3e573d15469dfa5c2cc32bb1d1e49ea040b08a39fba01636c96f8abd54612a2b4d6f1efbcdb07492f  git_search_fix.patch"
