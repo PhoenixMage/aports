@@ -1,0 +1,27 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-jaraco.collections
+_pkgname=jaraco.collections
+pkgver=3.0.0
+pkgrel=0
+pkgdesc="Collection objects similar to those in stdlib"
+url="https://github.com/jaraco.collections-client/python/"
+arch="noarch"
+license="MIT"
+depends="python3 py3-jaraco.classes py3-jaraco.text py3-six py3-jaraco"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-jaraco.collections" # Backwards compatibility
+provides="py-jaraco.collections=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+	rm $pkgdir/usr/lib/python3.8/site-packages/jaraco/__init__.py
+	rm $pkgdir/usr/lib/python3.8/site-packages/jaraco/__pycache__/__init__.cpython-38.pyc
+}
+
+sha512sums="c6c5d28fe4b3940c81c68bf877249805db3f508d83a0071947c7a5596d3636631df91cc6e87802b0fa6cd5c8bdd1ef2f39b924471666b44d2147cb64ad1533ad  jaraco.collections-3.0.0.tar.gz"

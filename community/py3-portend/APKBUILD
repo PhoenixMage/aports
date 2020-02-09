@@ -1,0 +1,25 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-portend
+_pkgname=portend
+pkgver=2.6
+pkgrel=0
+pkgdesc="TCP port monitoring and discovery"
+url="https://github.com/jaraco/portend"
+arch="noarch"
+license="MIT"
+depends="python3 py3-tempora"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-portend" # Backwards compatibility
+provides="py-portend=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+sha512sums="9e53c668ba9d0ddb2e92d9b4c97d2b8a4d858a6fc44123414ee3c8ac433f51f50a4773ee08f85bb134e49aeace2a17baffd32962d36df0b19b505a2c6634bf7e  portend-2.6.tar.gz"

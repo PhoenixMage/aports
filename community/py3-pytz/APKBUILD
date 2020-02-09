@@ -1,0 +1,25 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-pytz
+_pkgname=pytz
+pkgver=2019.3
+pkgrel=0
+pkgdesc="World timezone definitions, modern and historical"
+url="https://pythonhosted.org/pytz/"
+arch="noarch"
+license="MIT"
+depends="python3"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-pytz" # Backwards compatibility
+provides="py-pytz=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+sha512sums="b925b59d197e7007dae8098d35518a470e4b7588d9114f51e4d8816813243a9f816f662055f690bedf56b86cc9ece06428ed8c55e5b3ed676ba0f504f7cb43af  pytz-2019.3.tar.gz"

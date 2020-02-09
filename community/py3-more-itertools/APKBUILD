@@ -1,0 +1,25 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-more-itertools
+_pkgname=more-itertools
+pkgver=8.2.0
+pkgrel=0
+pkgdesc="More routines for operating on iterables, beyond itertools"
+url="https://github.com/erikrose/more-itertools"
+arch="noarch"
+license="MIT"
+depends="python3"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-more-itertools" # Backwards compatibility
+provides="py-more-itertools=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+sha512sums="08b78a5a85a04296fad82857017ec2763250de0bd3159bc7bd8b23b54f90b363023b64e899e79603f2b4c8267d0bb2ed598d7e2910d541921252d66af656cba2  more-itertools-8.2.0.tar.gz"

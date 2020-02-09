@@ -1,0 +1,25 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-routes
+_pkgname=Routes
+pkgver=2.4.1
+pkgrel=0
+pkgdesc="Routing Recognition and Generation Tools"
+url="https://github.com/bbangert/routes"
+arch="noarch"
+license="MIT"
+depends="python3 py3-repoze.lru"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-routes" # Backwards compatibility
+provides="py-routes=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+sha512sums="b0566f10ca83af0459e9c59fa2217bdc5ebf349d944396bcb21ffa731ad189c642e409381979cb5da3153630c24f20aa974a99711f16aca9f91413976af2bb04  Routes-2.4.1.tar.gz"

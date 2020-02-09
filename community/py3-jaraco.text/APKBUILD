@@ -1,0 +1,27 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-jaraco.text
+_pkgname=jaraco.text
+pkgver=3.2.0
+pkgrel=0
+pkgdesc="Collection objects similar to those in stdlib"
+url="https://github.com/jaraco/jaraco.text"
+arch="noarch"
+license="MIT"
+depends="python3 py3-jaraco.functools py3-six py3-jaraco"
+makedepends="py3-setuptools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-jaraco.text" # Backwards compatibility
+provides="py-jaraco.text=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+  rm $pkgdir/usr/lib/python3.8/site-packages/jaraco/__init__.py
+  rm $pkgdir/usr/lib/python3.8/site-packages/jaraco/__pycache__/__init__.cpython-38.pyc
+}
+
+sha512sums="4107ef1078b44714b6ee5fb6ebd2bb7c35415debc6eaedd8bc18a70a2936cc7c7757acd7b3fac9587201ef52a25d9b29e49f2385a0a08afffb1d0c3de6ecc377  jaraco.text-3.2.0.tar.gz"

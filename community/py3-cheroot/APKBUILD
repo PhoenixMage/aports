@@ -1,0 +1,25 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=py3-cheroot
+_pkgname=cheroot
+pkgver=8.2.1
+pkgrel=0
+pkgdesc="Cheroot is the high-performance, pure-Python HTTP server used by CherryPy."
+url="https://github.com/cheroot-client/python/"
+arch="noarch"
+license="Apache-2.0"
+depends="python3"
+makedepends="py3-setuptools py3-jaraco.functools py3-more-itertools"
+source="https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+builddir="$srcdir"/$_pkgname-$pkgver
+replaces="py-cheroot" # Backwards compatibility
+provides="py-cheroot=$pkgver-r$pkgrel" # Backwards compatibility
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+sha512sums="3f6b55c6b2403569eedb1fe7b473d3a65ad5d06cb99a38370316db38b6138b1a6921c6b7d8ba64424c5b8c20c9c58ada33da7cb8ebb6f313610f63c1f364f862  cheroot-8.2.1.tar.gz"
