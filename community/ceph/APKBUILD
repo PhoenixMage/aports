@@ -3,7 +3,7 @@
 # Maintainer: Iggy Jackson <iggy@kws1.com>
 # Test 1
 pkgname=ceph
-pkgver=14.2.7
+pkgver=14.2.8
 pkgrel=0
 pkgdesc="Ceph is a distributed object store and file system"
 pkgusers="ceph"
@@ -98,7 +98,6 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	BlueFS.cc.patch
 	osd_types.h.patch
 	ceph-dencoder-dont-compile.patch
-	boost-1.72.patch
 
 	rbd-nbd.cc.patch
 	Striper.cc.patch
@@ -107,6 +106,7 @@ source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
 	git_search_fix.patch
 	armv7_timeout_fix.patch
 	"
+	#boost-1.72.patch
 subpackages="
 	$pkgname-doc
 	$pkgname-base
@@ -573,7 +573,7 @@ _pkg() {
 	done
 }
 
-sha512sums="59f475e56053ba5e7e3a482a3a91b4d44272e6ec8051b92783de76c09c0d967a7ef76676db998968a709e48f08e90828dd8f86bd96a7c3fd111d48bfb7fd93b1  ceph_14.2.7.orig.tar.gz
+sha512sums="38b0c6df58579377528c8f8e06d0cbc40f471f6eb2fb4a05b395f6fddbd3f2117674545b2147d8730973b01967ddcd4322a769ba03f9c625417ed35cc39f195a  ceph_14.2.8.orig.tar.gz
 e1becd813ed3f28e2e4a6bef78b3b5117c1c0bb9cabe0ba9c912e0a20b551b6b2667495cddb94acd64192e287144911ff1c11e0d636fe04cc458146cfb0daca8  allperms.patch
 35722b11ad52a3145153635b6a96abda2a23ae9c7e63e2eac006c1e5b8014452c4a1a11bbe0292fd731e4c43aa38e27dd75d2ff9d25bcf52290278f71e868570  musl-fixes.patch
 10e00d03ca2f9edb22a66d2aa0d1ff7e4b79b88a70aabf3016cdfd58ed57fcf475975bf14bf4edbb0d9f17e224ce3ad4646647e4a731185fbfc94530bd0a3fce  buffer.h.patch
@@ -582,7 +582,6 @@ bf5b6d2a94eaedcc6316702c5ddbc3e11ab2662f275a0750b314b216b1130c1fc0d00c12780cde3c
 962659358f261c4dbaff1463220694b6f7ac61006b33be8e7950cf45115aec46c3a9acddafceb1773c39ef79664a8f9950303d66160cda96068eb0d51260afbb  BlueFS.cc.patch
 1bfcf766d546c963bd7b1a1a64ea236b4e0fcb534855d3d1c0056dc09a5945b66543e28d29e1a89ccc81fd534ab4a952ff09da46e770fd37008a2fbaf3344e89  osd_types.h.patch
 8a36b2aaddba6fa07c3583ebaabc38adbf5f6f744c62012561b988a12401d1235104b289d2fd6c7ffd6c03c3991071543ffc5adcc73ec1793dd42fd394cce98f  ceph-dencoder-dont-compile.patch
-4f62fc054789bdbbc0e10a5f6a9cd188eba51b5cfa64c401fc9daca3c013603b1c795420959fb921c19d5c8a7869f9f008807796cb5692182eda6223e582711b  boost-1.72.patch
 e1a2f47b2abfd242867376dab6b773d433a0785a0a1fdfc1aa1dbf4fd6ff4fe6eff605ff787c88e01a2b2d0c28510aed3d650b29d5cb188ac4e64ff17928d2e2  rbd-nbd.cc.patch
 5c599c3133397de17463d9329b9eb69a3579ddbd7d97a858c072fe8afcb620b1ee45d20a8f36781ec4242dc958236137dfb8db19f3686ea1c74ae1f729381c4a  Striper.cc.patch
 f97ea5f1d9b1234bc4df3722683a14d790ec17829a5710c347dea2bc1c547f81249405f1c12167c28c7b672e8c5c66f402ee9874d8577bf566d9898248a8709e  BlueStore.cc.patch
