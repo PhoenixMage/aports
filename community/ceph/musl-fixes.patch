@@ -1,19 +1,7 @@
-From c49ccfad8051cafbef0aad97257a78fd8f9997c3 Mon Sep 17 00:00:00 2001
-From: PhoenixMage <1900747+PhoenixMage@users.noreply.github.com>
-Date: Wed, 8 Apr 2020 22:29:02 +1000
-Subject: [PATCH] Make K use a standard type
-
-uint is undefined on musl as it isnt a standard type.
-Replaced uint with the standard type "unsigned int" to resolve compilation issue on musl.
----
- support/src/indirect_intrusive_heap.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/support/src/indirect_intrusive_heap.h b/support/src/indirect_intrusive_heap.h
-index 8c5dfa9..5fcc250 100644
---- a/support/src/indirect_intrusive_heap.h
-+++ b/support/src/indirect_intrusive_heap.h
-@@ -48,7 +48,7 @@ namespace crimson {
+diff -aur a/src/dmclock/support/src/indirect_intrusive_heap.h b/src/dmclock/support/src/indirect_intrusive_heap.h
+--- a/src/dmclock/support/src/indirect_intrusive_heap.h	2019-12-19 09:15:27.000000000 +1100
++++ b/src/dmclock/support/src/indirect_intrusive_heap.h	2020-04-08 23:18:35.102087776 +1000
+@@ -48,7 +48,7 @@
  	   typename T,
  	   IndIntruHeapData T::*heap_info,
  	   typename C,
