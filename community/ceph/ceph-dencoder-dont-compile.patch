@@ -1,9 +1,0 @@
-diff -Naur a/src/tools/CMakeLists.txt b/src/tools/CMakeLists.txt
---- a/src/tools/CMakeLists.txt	2019-09-14 04:07:41.000000000 +1000
-+++ b/src/tools/CMakeLists.txt	2019-12-10 12:20:36.208639719 +1100
-@@ -122,4 +122,4 @@
-   endif()
- endif(WITH_RBD)
- 
--add_subdirectory(ceph-dencoder)
-+#add_subdirectory(ceph-dencoder)
