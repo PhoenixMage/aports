@@ -91,7 +91,8 @@ makedepends="
 "
 
 source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
-	musl-fixes.patch"
+	musl-fixes.patch
+  nodeenv-armv8l.patch"
 
 subpackages="
 	$pkgname-doc
@@ -560,4 +561,5 @@ _pkg() {
 }
 
 sha512sums="07a3ff2ccf1a3abac652ff8c5f1611e7c628fcedcb280adc6cd49792b46fa50c7c29437dc57c2c4a6af708a6833abf8c1a386ef2142d30bd5e1f214ba7aec4f2  ceph_15.2.0.orig.tar.gz
-23e29a3397a5bc1ef4d2fe60deff10a78458eb4b199d9743721854e285c104a23be6bdeccc6b17386005bc85af4885d01938f32b1636a40d2b2983c6add3f107  musl-fixes.patch"
+23e29a3397a5bc1ef4d2fe60deff10a78458eb4b199d9743721854e285c104a23be6bdeccc6b17386005bc85af4885d01938f32b1636a40d2b2983c6add3f107  musl-fixes.patch
+a30924858fc2e949b65647e7919fb22473f537b14b145580a748f001e3f4a10b8a50c83c2cca4a9dd345a9b716b5c18766e59b8e7ddc0f1a61258099e9b9c710  nodeenv-armv8l.patch"

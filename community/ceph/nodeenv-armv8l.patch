@@ -1,0 +1,26 @@
+diff -Naur a/make-dist b/make-dist
+--- a/make-dist	2020-03-24 04:47:45.000000000 +1100
++++ b/make-dist	2020-04-09 09:48:26.518417643 +1000
+@@ -74,6 +74,7 @@
+ 
+   $CURR_DIR/src/tools/setup-virtualenv.sh $TEMP_DIR
+   $TEMP_DIR/bin/pip install nodeenv
++  patch -Np1 -i nodeenv-armv8l.patch
+   $TEMP_DIR/bin/nodeenv -p --node=10.18.1
+   cd src/pybind/mgr/dashboard/frontend
+ 
+diff -Naur a/nodeenv-armv8l.patch b/nodeenv-armv8l.patch
+--- a/nodeenv-armv8l.patch	1970-01-01 10:00:00.000000000 +1000
++++ b/nodeenv-armv8l.patch	2020-04-09 10:07:35.101482482 +1000
+@@ -0,0 +1,11 @@
++diff -aur a/build/src/pybind/mgr/dashboard/node-env/lib/python3.8/site-packages/nodeenv.py b/build/src/pybind/mgr/dashboard/node-env/lib/python3.8/site-packages/nodeenv.py
++--- a/build/src/pybind/mgr/dashboard/node-env/lib/python3.8/site-packages/nodeenv.py	2020-04-09 09:59:50.180480775 +1000
+++++ b/build/src/pybind/mgr/dashboard/node-env/lib/python3.8/site-packages/nodeenv.py	2020-04-09 09:59:22.611607346 +1000
++@@ -514,6 +514,7 @@
++         'AMD64':  'x64',  # Windows Server 2012 R2 (x64)
++         'armv6l': 'armv6l',     # arm
++         'armv7l': 'armv7l',
+++        'armv8l': 'armv7l',
++         'aarch64': 'arm64',
++     }
++     sysinfo = {
