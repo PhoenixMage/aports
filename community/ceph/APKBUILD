@@ -1,7 +1,7 @@
 # Contributor: Anthony Davies <anthony.t.davies@gmail.com>
 # Contributor: John Coyle <dx9err@gmail.com>
 # Maintainer: Iggy Jackson <iggy@kws1.com>
-# Test 1
+
 pkgname=ceph
 pkgver=15.2.0
 pkgrel=0
