@@ -1,0 +1,26 @@
+diff -Naur a/nodeenv-armv8l.patch b/nodeenv-armv8l.patch
+--- a/nodeenv-armv8l.patch	1970-01-01 10:00:00.000000000 +1000
++++ b/nodeenv-armv8l.patch	2020-04-09 11:44:40.883842937 +1000
+@@ -0,0 +1,11 @@
++diff -aur dashboard.a/node-env/lib/python3.8/site-packages/nodeenv.py dashboard.b/node-env/lib/python3.8/site-packages/nodeenv.py
++--- dashboard.a/node-env/lib/python3.8/site-packages/nodeenv.py	2020-04-09 11:40:09.084130356 +1000
+++++ dashboard.b/node-env/lib/python3.8/site-packages/nodeenv.py	2020-04-09 09:59:22.611607346 +1000
++@@ -514,6 +514,7 @@
++         'AMD64':  'x64',  # Windows Server 2012 R2 (x64)
++         'armv6l': 'armv6l',     # arm
++         'armv7l': 'armv7l',
+++        'armv8l': 'armv7l',
++         'aarch64': 'arm64',
++     }
++     sysinfo = {
+diff -Naur a/src/pybind/mgr/dashboard/CMakeLists.txt b/src/pybind/mgr/dashboard/CMakeLists.txt
+--- a/src/pybind/mgr/dashboard/CMakeLists.txt	2020-03-24 04:47:45.000000000 +1100
++++ b/src/pybind/mgr/dashboard/CMakeLists.txt	2020-04-09 11:24:52.704925096 +1000
+@@ -32,6 +32,7 @@
+     OUTPUT "${mgr-dashboard-nodeenv-dir}/bin/npm"
+     COMMAND ${CMAKE_SOURCE_DIR}/src/tools/setup-virtualenv.sh --python=${MGR_PYTHON_EXECUTABLE} ${mgr-dashboard-nodeenv-dir}
+     COMMAND ${mgr-dashboard-nodeenv-dir}/bin/pip install nodeenv
++    COMMAND patch -Np1 -i ${CMAKE_SOURCE_DIR}/nodeenv-armv8l.patch
+     COMMAND ${mgr-dashboard-nodeenv-dir}/bin/nodeenv -p --node=10.18.1
+     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+     COMMENT "dashboard nodeenv is being installed"
