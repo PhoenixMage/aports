@@ -92,6 +92,7 @@ makedepends="
 
 source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
   nodeenv-armv8l.patch
+  PurgeQueue.cc.patch
 	musl-fixes.patch"
 
 subpackages="
@@ -220,7 +221,7 @@ build() {
 		  ;;
 	esac
 
-#	make
+	make
 
 }
 
@@ -562,4 +563,5 @@ _pkg() {
 
 sha512sums="07a3ff2ccf1a3abac652ff8c5f1611e7c628fcedcb280adc6cd49792b46fa50c7c29437dc57c2c4a6af708a6833abf8c1a386ef2142d30bd5e1f214ba7aec4f2  ceph_15.2.0.orig.tar.gz
 e2858157df0b9814b32273e0ededb176342032bf873a6e03b4c354713917a98682aad00c4afd2e338e3e5b1e08abcf0bc259f684c2d9c9931176b5665252b0bf  nodeenv-armv8l.patch
+5692c7f3774d927417e5ddac4ef427ed6d20f92d827a71962bac9775667c7f33b0203d8d1f85e985eb0ba32b3271445e92c3acace27fcb1742e92ed129e762e8  PurgeQueue.cc.patch
 23e29a3397a5bc1ef4d2fe60deff10a78458eb4b199d9743721854e285c104a23be6bdeccc6b17386005bc85af4885d01938f32b1636a40d2b2983c6add3f107  musl-fixes.patch"
