@@ -63,7 +63,6 @@ makedepends="
 	lvm2-dev
 	lz4-dev
 	nodejs
-  npm
 	nss-dev
 	oath-toolkit-dev
 	openldap-dev
@@ -220,7 +219,7 @@ build() {
 		  ;;
 	esac
 
-	make
+#	make
 
 }
 
