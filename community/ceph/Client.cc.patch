@@ -1,0 +1,11 @@
+diff -aur a/src/client/Client.cc b/src/client/Client.cc
+--- a/src/client/Client.cc	2020-03-03 04:49:20.000000000 +1100
++++ b/src/client/Client.cc	2020-04-03 13:59:53.338365788 +1100
+@@ -38,6 +38,7 @@
+ 
+ #if defined(__linux__)
+ #include <linux/falloc.h>
++#include <linux/fs.h>
+ #endif
+ 
+ #include <sys/statvfs.h>
