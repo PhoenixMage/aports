@@ -1,0 +1,3 @@
+#!/bin/sh
+
+install -m 700 -d /etc/kubernetes/manifests
