@@ -1,10 +1,10 @@
 # Contributor: Anthony Davies <anthony.t.davies@gmail.com>
 # Contributor: John Coyle <dx9err@gmail.com>
 # Maintainer: Iggy Jackson <iggy@kws1.com>
-# Test 1
+
 pkgname=ceph
 pkgver=15.2.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Ceph is a distributed object store and file system"
 pkgusers="ceph"
 pkggroups="ceph"
@@ -93,7 +93,9 @@ makedepends="
 source="https://download.ceph.com/tarballs/ceph_$pkgver.orig.tar.gz
   nodeenv-armv8l.patch
   PurgeQueue.cc.patch
-	musl-fixes.patch"
+	musl-fixes.patch
+  git_search_fix.patch
+  "
 
 subpackages="
 	$pkgname-doc
@@ -564,4 +566,5 @@ _pkg() {
 sha512sums="07a3ff2ccf1a3abac652ff8c5f1611e7c628fcedcb280adc6cd49792b46fa50c7c29437dc57c2c4a6af708a6833abf8c1a386ef2142d30bd5e1f214ba7aec4f2  ceph_15.2.0.orig.tar.gz
 e2858157df0b9814b32273e0ededb176342032bf873a6e03b4c354713917a98682aad00c4afd2e338e3e5b1e08abcf0bc259f684c2d9c9931176b5665252b0bf  nodeenv-armv8l.patch
 5692c7f3774d927417e5ddac4ef427ed6d20f92d827a71962bac9775667c7f33b0203d8d1f85e985eb0ba32b3271445e92c3acace27fcb1742e92ed129e762e8  PurgeQueue.cc.patch
-23e29a3397a5bc1ef4d2fe60deff10a78458eb4b199d9743721854e285c104a23be6bdeccc6b17386005bc85af4885d01938f32b1636a40d2b2983c6add3f107  musl-fixes.patch"
+aabb73e224635055c7ee52ebc6107e792430d71852e3c06a3f8af761caa8fbf2cc72ff58eee993818dffd20fbe41cbc7cc2d440f24d0f583ce91093649a77874  musl-fixes.patch
+c175baa508690f0951e758033bb846ddeddd2efdfe020016a6356f40b7e6442f2e4de7975c69f05c798493e4cbc2b8ef0a631c17d7a6ae8b919c553933ccf1ad  git_search_fix.patch"
