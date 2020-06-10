@@ -44,7 +44,7 @@ package() {
   make DESTDIR="$pkgdir"/usr/lib/emscripten install
   install -Dm644 "$srcdir"/emscripten-config "$pkgdir"/usr/lib/emscripten/.emscripten
 
-  rm -r "$pkgdir"/usr/lib/emscripten/{*.bat,.circleci,.clang-format,.editorconfig,.flake8,.gitattributes,.github,.gitignore}
+  rm -rf "$pkgdir"/usr/lib/emscripten/{*.bat,.circleci,.clang-format,.editorconfig,.flake8,.gitattributes,.github,.gitignore}
 
   install -d "$pkgdir"/usr/share/doc
   ln -s /usr/lib/emscripten/site/source/docs "$pkgdir"/usr/share/doc/$pkgname
