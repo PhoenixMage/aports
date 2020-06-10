@@ -15,7 +15,7 @@ workspace:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci:v3.11-armv7
+  image: phoenixmage/alpine-drone-ci:v3.12-armv7
   environment:
     PKG_SIGN_KEY:
       from_secret: pkg_sign_key
@@ -53,7 +53,7 @@ workspace:
 steps:
 - name: build
   pull: always
-  image: phoenixmage/alpine-drone-ci:v3.11-aarch64
+  image: phoenixmage/alpine-drone-ci:v3.12-aarch64
   environment:
     PKG_SIGN_KEY:
       from_secret: pkg_sign_key
