@@ -1,0 +1,59 @@
+# Maintainer: Anthony Davies <anthony.t.davies@gmail.com>
+pkgname=emscripten
+pkgver=1.39.17
+pkgrel=0
+pkgdesc="An open platform to connect, manage, and secure microservices."
+url="https://github.com/emscripten/emscripten"
+arch="x86_64 aarch64 armv7"
+license="Apache-2.0"
+options="!check"
+depends="binaryen"
+makedepends="cmake git ninja python3" 
+# Get commit SHAs from here:
+# https://chromium.googlesource.com/emscripten-releases/+/refs/heads/master/DEPS
+source="$pkgname-$pkgver.tar.gz::https://github.com/emscripten-core/emscripten/archive/$pkgver.tar.gz
+  llvm-project.tar.gz::https://github.com/llvm/llvm-project/tarball/4c735439fd9a0cfea9ae366df8b36281436d4708
+  https://github.com/emscripten-core/emscripten/pull/11355.patch
+  libcxxabi-include-libunwind.patch::https://git.archlinux.org/svntogit/community.git/plain/trunk/libcxxabi-include-libunwind.patch?h=packages/emscripten
+  emscripten-config::https://git.archlinux.org/svntogit/community.git/plain/trunk/emscripten-config?h=packages/emscripten
+  emscripten.sh::https://git.archlinux.org/svntogit/community.git/tree/trunk/emscripten.sh?h=packages/emscripten"
+
+build() {
+  cd $srcdir/llvm*/llvm
+    cmake . \
+    -Bbuild \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_RPATH=YES \
+    -DLLVM_TARGETS_TO_BUILD="host;WebAssembly" \
+    -DLLVM_BUILD_RUNTIME=OFF \
+    -DLLVM_TOOL_LTO_BUILD=ON \
+    -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
+    -DLLVM_INCLUDE_EXAMPLES=OFF \
+    -DLLVM_INCLUDE_TESTS=OFF \
+    -DLLVM_ENABLE_PROJECTS="lld;clang" \
+    -DCLANG_INCLUDE_TESTS=OFF
+  ninja -C build
+}
+
+package() {
+  install -d "$pkgdir"/usr/lib
+  cp -r "$srcdir"/llvm*/llvm/build/bin "$pkgdir"/usr/lib/emscripten-llvm
+  cd $builddir
+
+  make DESTDIR="$pkgdir"/usr/lib/emscripten install
+  install -Dm644 "$srcdir"/emscripten-config "$pkgdir"/usr/lib/emscripten/.emscripten
+
+  rm -r "$pkgdir"/usr/lib/emscripten/{*.bat,.circleci,.clang-format,.editorconfig,.flake8,.gitattributes,.github,.gitignore}
+
+  install -d "$pkgdir"/usr/share/doc
+  ln -s /usr/lib/emscripten/site/source/docs "$pkgdir"/usr/share/doc/$pkgname
+  install -Dm755 "$srcdir"/emscripten.sh "$pkgdir"/etc/profile.d/emscripten.sh
+}
+
+sha512sums="4a73a183f0427c990d739908644245f56dbd0aef458fbe35b1848a1e38f54f76c61780a4a0960152c657279f5d29fb89692841698691b61c0069911673fd8bfc  emscripten-1.39.17.tar.gz
+f0669c5ea9d0fd1c88d5d4dd54eddfa97d3b60815c09d9e4b8c6775bf4aa4d63c85280ba02cf437712b56bffbcf115b785f9f8c48ed5500cae7830b305098741  llvm-project.tar.gz
+ea8dc41ace8e8628b24e68a39ceb7a82a51fa9f1501adb09c9799a1105a0becf2be54ec78149e115797b84b646dffe92180bbe3f276aef143cb318d9ac7e6335  11355.patch
+b124ff6110810e3190bf05deda478c6fef044ff55a435df978fdb7ff7b4f312186add48cb99946b67a2467f7e28855e36606209c3c4dcee2898762ccc2e4c2ed  libcxxabi-include-libunwind.patch
+d273785602bb7b199e22269bdc7fdc6190a8dd4defe0bfa3e41455c4e3c40d647dcc82c64c13024fb071e0f16bb094a7a30b773eb39fe84027d637c918cd39a6  emscripten-config
+2f1f56eb2d5cf01158dfca899abb8d2b4761171ce9f4d183d8eba4193497a12635ce93432526f17f290b85c317ca13397e88931164c619188e6803d34c249396  emscripten.sh"
