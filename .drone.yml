@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: v3.11-armv7
+name: v3.12-armv7
 
 platform:
   os: linux
@@ -38,7 +38,7 @@ trigger:
     - pull_request
 ---
 kind: pipeline
-name: v3.11-aarch64
+name: v3.12-aarch64
 
 platform:
   os: linux
